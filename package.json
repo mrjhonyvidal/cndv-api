@@ -1,0 +1,18 @@
+{
+  "name": "cndv-api",
+  "version": "1.0.0",
+  "description": "API for CNDV",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon ."
+  },
+  "repository": "git@github.com:gpfgv/cndv-api.git",
+  "author": "Jhony Vidal <mrjhonyvidal@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^2.21.0",
+    "graphql": "^15.5.0",
+    "nodemon": "^2.0.7"
+  }
+}
