@@ -12,3 +12,6 @@ O webservice do CDNV está constituído de uma API que centraliza a lógica resp
 yarn run dev
 open http://localhost:4000/
 ``` 
+
+![graphql-apollo-server](graphql-server-screenshot.png)
+![graphql-apollo-server-query-input](graphql-server-query-input.png)

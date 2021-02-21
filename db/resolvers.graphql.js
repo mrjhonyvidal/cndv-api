@@ -80,7 +80,12 @@ const carteira_tipo_vacinas = [
 
 const resolvers = {
     Query: {
-        getCarteiraTipoVacinas: () => carteira_tipo_vacinas
+        getCarteiraTipoVacinas: () => carteira_tipo_vacinas,
+        getCarteiraTipoVacina: (_, {input}, ctx, info ) => {
+            console.log(ctx);
+            const result = carteira_tipo_vacinas.filter(tipo => tipo.descricao === input.descricao);
+            return result;
+        }
     }
 }
 

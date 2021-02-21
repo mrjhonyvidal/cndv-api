@@ -5,8 +5,14 @@ const typeDefs = gql`
         descricao: String
         pais: String
     }
+    
+    input CarteiraTipoVacinasInput {
+        descricao: String
+    }
+    
     type Query {
-        getCarteiraTipoVacinas: [CarteiraTipoVacinas]
+        getCarteiraTipoVacinas : [CarteiraTipoVacinas]
+        getCarteiraTipoVacina(input: CarteiraTipoVacinasInput!) : [CarteiraTipoVacinas]
     }
 `;
 

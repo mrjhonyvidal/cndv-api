@@ -4,7 +4,13 @@ const resolvers = require('./db/resolvers.graphql');
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: () => {
+        const myContext = "Vacina sim";
+        return {
+            myContext
+        }
+    }
 });
 
 server.listen().then( ({url}) => {
