@@ -7,6 +7,8 @@ O webservice do CDNV está constituído de uma API que centraliza a lógica resp
 - GraphQL (^15.5.0) e Apolo Server (^2.21.0)
 - MySQL
 
+Configure suas variáveis em env/dev.env
+
 ### DB MySQL
 ```
 sudo docker-compose up

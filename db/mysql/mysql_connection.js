@@ -1,3 +1,4 @@
+require('dotenv').config({path:'env/dev.env'});
 
 async function connect(){
     if (global.connection && global.connection.state !== 'disconnected'){
@@ -5,7 +6,7 @@ async function connect(){
     }
 
     const mysql = require("mysql2/promise");
-    const connection = await mysql.createConnection("mysql://cndv:C123N456D789V@localhost:3306/cndv");
+    const connection = await mysql.createConnection(`mysql://${process.env.MYSQL_USER}:${process.env.MYSQL_PASSWORD}@${process.env.MYSQL_HOST}:${process.env.MYSQL_PORT}/${process.env.MYSQL_DATABASE}`);
     console.log("Connected to MySQL");
     global.connection = connection;
     return connection;
