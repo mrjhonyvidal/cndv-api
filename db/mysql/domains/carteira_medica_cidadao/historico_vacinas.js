@@ -76,7 +76,7 @@ async function updateHistoricoVacinacao(id, cpf, historicoVacinacao) {
             'cidade=?, ' +
             'uf=?, ' +
             'obs=?' +
-            ' WHERE id=?';
+            ' WHERE cpf=?';
         const values = [
             historicoVacinacao.id_tipo_vacina,
             historicoVacinacao.dt_aplicacao,
@@ -88,7 +88,8 @@ async function updateHistoricoVacinacao(id, cpf, historicoVacinacao) {
             historicoVacinacao.unidade_saude,
             historicoVacinacao.cidade,
             historicoVacinacao.uf,
-            historicoVacinacao.obs
+            historicoVacinacao.obs,
+            cpf
         ];
         return await conn.query(sql, values);
     }catch(error){

@@ -4,6 +4,7 @@ async function selectDadosPessoaisCidadao() {
     try{
         const conn      = await mysqlDb.connect();
         const [rows]    = await conn.query('SELECT ' +
+            'cpf, ' +
             'rg, ' +
             'nome, ' +
             'dt_nascimento ' +
@@ -32,6 +33,7 @@ async function insertDadosPessoaisCidadao(dadosPessoaisCidadao) {
     try{
         const conn      = await mysqlDb.connect();
         const sql       = 'INSERT INTO carteira_dados_pessoais_cidadao(' +
+            'cpf, ' +
             'rg, ' +
             'nome, ' +
             'dt_nascimento, ' +
@@ -50,6 +52,7 @@ async function insertDadosPessoaisCidadao(dadosPessoaisCidadao) {
             'obs' +
             ') VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);';
         const values    = [
+            dadosPessoaisCidadao.cpf,
             dadosPessoaisCidadao.rg,
             dadosPessoaisCidadao.nome,
             dadosPessoaisCidadao.dt_nascimento,
@@ -94,7 +97,7 @@ async function updateDadosPessoaisCidadao(cpf, dadosPessoaisCidadao) {
             'pais=?, ' +
             'cep=?, ' +
             'obs=?' +
-            ' WHERE id=?';
+            ' WHERE cpf=?';
         const values = [
             dadosPessoaisCidadao.rg,
             dadosPessoaisCidadao.nome,
@@ -111,7 +114,8 @@ async function updateDadosPessoaisCidadao(cpf, dadosPessoaisCidadao) {
             dadosPessoaisCidadao.uf,
             dadosPessoaisCidadao.pais,
             dadosPessoaisCidadao.cep,
-            dadosPessoaisCidadao.obs
+            dadosPessoaisCidadao.obs,
+            cpf
         ];
         return await conn.query(sql, values);
     }catch(error){

@@ -77,6 +77,7 @@ const carteira_tipo_vacinas = [
         pais: 'BRA'
     }
 ];
+const UsuarioAcessoModel = require('../db/mysql/domains/usuario/usuario_acesso');
 
 const resolvers = {
     Query: {
@@ -85,6 +86,26 @@ const resolvers = {
             console.log(ctx);
             const result = carteira_tipo_vacinas.filter(tipo => tipo.descricao === input.descricao);
             return result;
+        }
+    },
+    Mutation: {
+        novoUsuarioAcesso: async (_, { input }) => {
+            // TODO verificar se o usuário está cadastrado
+            const { cpf, email} = input;
+            const isNewUsuario = await UsuarioAcessoModel.checkUsuarioExiste(cpf, email);
+            if(isNewUsuario.length > 0) {
+                throw new Error('Não foi possível realizar o cadastro, por favor entre em contato com o administrador do sistema.')
+            }
+
+           // Hashear senha
+
+           // Guardar na base
+            try{
+                const result = await UsuarioAcessoModel.insertUsuarioAcesso(input);
+                return result[0].rowsAffected;
+            }catch (error) {
+                console.log(error);
+            }
         }
     }
 }

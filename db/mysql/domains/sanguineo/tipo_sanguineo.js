@@ -23,11 +23,11 @@ async function insertTipoSanguineo(tipoSanguineo) {
     }
 }
 
-async function updateTipoSanguineo(id, tipoSanguineo) {
+async function updateTipoSanguineo(tipoSanguineo) {
     try {
         const conn = await mysqlDb.connect();
-        const sql = 'UPDATE carteira_tipo_sanguineo SET tipo=?, pais=?, pode_receber=?, pode_doar=?, empresa=? WHERE tipo=? AND empresa=?';
-        const values = [tipoSanguineo.tipo, tipoSanguineo.pais, tipoSanguineo.pode_receber, tipoSanguineo.pode_doar, tipoSanguineo.empresa];
+        const sql = 'UPDATE carteira_tipo_sanguineo SET tipo=?, pais=?, pode_receber=?, pode_doar=? WHERE tipo=?';
+        const values = [tipoSanguineo.tipo, tipoSanguineo.pais, tipoSanguineo.pode_receber, tipoSanguineo.pode_doar, tipoSanguineo.tipo];
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
@@ -35,11 +35,11 @@ async function updateTipoSanguineo(id, tipoSanguineo) {
     }
 }
 
-async function deleteTipoSanguineo(id, empresa) {
+async function deleteTipoSanguineo(tipo) {
     try {
         const conn = await mysqlDb.connect();
         const sql = 'DELETE FROM carteira_tipo_sanguineo WHERE tipo=? AND empresa=?';
-        return await conn.query(sql, [id], [empresa]);
+        return await conn.query(sql, [tipo]);
     }catch(error){
         console.log(error);
         process.exit(1);
