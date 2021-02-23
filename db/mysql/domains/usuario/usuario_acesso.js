@@ -1,16 +1,16 @@
 mysqlDb = require('../../mysql_connection');
 
-async function checkUsuarioExiste(cpf, email) {
+async function checkUsuarioExiste(cpf) {
     try{
         const conn      = await mysqlDb.connect();
         const sql       = 'SELECT ' +
             'cpf, ' +
+            'senha, ' +
             'email ' +
-            'FROM carteira_dados_pessoais_cidadao WHERE cpf=? OR email=?;';
+            'FROM carteira_dados_pessoais_cidadao WHERE cpf=?;';
 
         const values = [
-            cpf,
-            email
+            cpf
         ];
         const [rows] = await conn.query(sql, values);
         return await rows;
