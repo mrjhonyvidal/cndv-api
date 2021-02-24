@@ -79,7 +79,7 @@ async function insertUsuarioAcesso(usuarioAcesso) {
             '',
             '',
             '',
-            ''
+            '07346574000165'
         ];
         return await conn.query(sql, values);
     }catch(error){

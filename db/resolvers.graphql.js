@@ -1,4 +1,5 @@
 require('dotenv').config({path:'env/dev.env'});
+
 const carteira_tipo_vacinas = [
     {
         descricao: 'BCG ID',
@@ -77,7 +78,10 @@ const carteira_tipo_vacinas = [
         pais: 'BRA'
     }
 ]; // TODO get tipo vacinas from DB
+
 const UsuarioAcessoModel = require('../db/mysql/domains/usuario/usuario_acesso');
+const TipoVacinaModel = require('../db/mysql/domains/vacina/tipo_vacina');
+
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -86,6 +90,8 @@ const createToken = (user, secretTokenKey, expiresIn) => {
     return jwt.sign({ cpf }, secretTokenKey, { expiresIn })
 }
 
+// TODO Extract Query and Mutation for each Module we have
+// Ex:. carteiraTipoVacionaResolver, dadosPessoaisCidadaoResolver, acessoUsuarioResolver, tipoDoseResolver, tipoSanguineoResolver, historicoVacinacaoResolver
 const resolvers = {
     Query: {
         getCarteiraTipoVacinas: () => carteira_tipo_vacinas,
@@ -101,20 +107,20 @@ const resolvers = {
     },
     Mutation: {
         novoUsuarioAcesso: async (_, { input }) => {
-            // TODO apply SPR in this function
+            // TODO apply SPR in this function, too many responsabilities!
 
-            // Verificar se o usuário está cadastrado
+            // Verify is user is registered
             const { cpf, email, senha} = input;
             const isNewUsuario = await UsuarioAcessoModel.checkUsuarioExiste(cpf);
             if(isNewUsuario.length > 0) {
                 throw new Error('Não foi possível realizar o cadastro, por favor entre em contato com o administrador do sistema.')
             }
 
-           // Encriptar senha
+           // Encrypt password
             const salt = await bcryptjs.genSalt(10);
             input.senha = await bcryptjs.hash(senha, salt);
 
-           // Guardar en el DB
+           // Save to DB
             try{
                 const result = await UsuarioAcessoModel.insertUsuarioAcesso(input);
                 return result[0].rowsAffected;
@@ -139,9 +145,17 @@ const resolvers = {
             return {
                 token: createToken(existeUsuario[0], process.env.SECRET_JWT, '24h')
             }
+        },
+        novoTipoVacina: async(_, { input }) => {
+            try {
+                const result = await TipoVacinaModel.insertTipoVacina(input);
+                return result[0].rowsAffected;
+
+            } catch(error) {
+                console.log(error);
+            }
         }
     }
-
 }
 
 module.exports = resolvers;

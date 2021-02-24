@@ -19,7 +19,7 @@ const typeDefs = gql`
     type TipoVacina {
         id: ID
         descricao: String
-    }
+    }      
     
     input CarteiraTipoVacinasInput {
         descricao: String
@@ -51,11 +51,26 @@ const typeDefs = gql`
          
     type Mutation {
         # Usuario Acesso
-        novoUsuarioAcesso(input: UsuarioInput): UsuarioAcesso
+        novoUsuarioAcesso(input: UsuarioInput): Int
         autenticarUsuario(input: AutenticarInput): Token
+        
         
         # Tipo Vacina
         novoTipoVacina(input: TipoVacinaInput): TipoVacina
+        
+        
+        # Tipo Sanguineo
+        
+        
+        # Tipo Dose
+        
+        
+        # Dados Pessoais Cidadao
+        
+        
+        # Historico Vacinacao
+        
+                         
     }
 `;
 
