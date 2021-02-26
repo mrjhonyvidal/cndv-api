@@ -12,7 +12,8 @@ const server = new ApolloServer({
         }
     }
 });
+const PORT = process.env.PORT || 4000;
 
-server.listen().then( ({url}) => {
-    console.log(`Server running in url ${url}`)
+server.listen(PORT).then( ({url}) => {
+    console.log(`Server running on port ${PORT}`)
 });

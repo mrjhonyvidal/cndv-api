@@ -6,6 +6,7 @@ async function checkUsuarioExiste(cpf) {
         const sql       = 'SELECT ' +
             'cpf, ' +
             'senha, ' +
+            'nome, ' +
             'email ' +
             'FROM carteira_dados_pessoais_cidadao WHERE cpf=?;';
 

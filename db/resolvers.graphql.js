@@ -143,7 +143,10 @@ const resolvers = {
 
             // Generate JWT token
             return {
-                token: createToken(existeUsuario[0], process.env.SECRET_JWT, '24h')
+                token: createToken(existeUsuario[0], process.env.SECRET_JWT, '24h'),
+                email: existeUsuario[0].email,
+                cpf: existeUsuario[0].cpf,
+                nome: existeUsuario[0].nome
             }
         },
         novoTipoVacina: async(_, { input }) => {

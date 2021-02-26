@@ -12,8 +12,11 @@ const typeDefs = gql`
         email: String
     }
     
-    type Token {
+    type UsuarioToken {
         token: String
+        email: String
+        cpf: String!
+        nome: String
     }
     
     type TipoVacina {
@@ -51,8 +54,8 @@ const typeDefs = gql`
          
     type Mutation {
         # Usuario Acesso
-        novoUsuarioAcesso(input: UsuarioInput): Int
-        autenticarUsuario(input: AutenticarInput): Token
+        novoUsuarioAcesso(input: UsuarioInput): UsuarioAcesso
+        autenticarUsuario(input: AutenticarInput): UsuarioToken
         
         
         # Tipo Vacina
