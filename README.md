@@ -93,3 +93,15 @@ query obtainUsuario($token: String!){
 }
 
 ```
+
+### Deploy to Heroku
+```
+heroku
+heroku login
+heroku create --remote production
+git push production main
+```
+
+```
+
+```

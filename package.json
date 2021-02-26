@@ -4,7 +4,7 @@
   "description": "API for CNDV",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build && node index.js",
+    "start": "node index.js",
     "dev": "nodemon ."
   },
   "repository": "git@github.com:gpfgv/cndv-api.git",
