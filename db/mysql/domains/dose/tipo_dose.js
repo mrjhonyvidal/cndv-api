@@ -14,8 +14,8 @@ async function selectTipoDose() {
 async function insertTipoDose(tipoDose) {
     try{
         const conn      = await mysqlDb.connect();
-        const sql       = 'INSERT INTO carteira_tipo_dose(descricao, pais, empresa) VALUES (?,?,?);';
-        const values    = [tipoDose.descricao, tipoDose.pais, tipoDose.empresa];
+        const sql       = 'INSERT INTO carteira_tipo_dose(id, descricao, pais, empresa) VALUES (?,?,?,?);';
+        const values    = [tipoDose.id, tipoDose.descricao, tipoDose.pais, tipoDose.empresa];
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);

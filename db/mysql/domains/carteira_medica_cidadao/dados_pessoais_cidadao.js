@@ -21,7 +21,7 @@ async function selectDadosPessoaisCidadao() {
             'pais ' +
             'cep ' +
             'obs ' +
-            'FROM carteira_dados_pessoais_cidadao;');
+            'FROM carteira_vacina;');
         return await rows;
     }catch(error){
         console.log(error);
@@ -32,7 +32,7 @@ async function selectDadosPessoaisCidadao() {
 async function insertDadosPessoaisCidadao(dadosPessoaisCidadao) {
     try{
         const conn      = await mysqlDb.connect();
-        const sql       = 'INSERT INTO carteira_dados_pessoais_cidadao(' +
+        const sql       = 'INSERT INTO carteira_vacina(' +
             'cpf, ' +
             'rg, ' +
             'nome, ' +
@@ -80,7 +80,7 @@ async function insertDadosPessoaisCidadao(dadosPessoaisCidadao) {
 async function updateDadosPessoaisCidadao(cpf, dadosPessoaisCidadao) {
     try {
         const conn = await mysqlDb.connect();
-        const sql = 'UPDATE carteira_dados_pessoais_cidadao ' +
+        const sql = 'UPDATE carteira_vacina ' +
             'SET rg=?, ' +
             'nome=?, ' +
             'dt_nascimento=?, ' +
@@ -127,7 +127,7 @@ async function updateDadosPessoaisCidadao(cpf, dadosPessoaisCidadao) {
 async function deleteDadosPessoaisCidadao(cpf) {
     try {
         const conn = await mysqlDb.connect();
-        const sql = 'DELETE FROM carteira_dados_pessoais_cidadao WHERE cpf=?';
+        const sql = 'DELETE FROM carteira_vacina WHERE cpf=?';
         return await conn.query(sql, [cpf]);
     }catch(error){
         console.log(error);

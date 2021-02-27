@@ -17,7 +17,7 @@ async function selectHistoricoVacinacao() {
             'cidade ' +
             'uf ' +
             'obs ' +
-            'FROM carteira_historico_vacinacao;');
+            'FROM carteira_vacina_historico;');
         return await rows;
     }catch(error){
         console.log(error);
@@ -28,7 +28,7 @@ async function selectHistoricoVacinacao() {
 async function insertHistoricoVacinacao(historicoVacinacao) {
     try{
         const conn      = await mysqlDb.connect();
-        const sql       = 'INSERT INTO carteira_historico_vacinacao(' +
+        const sql       = 'INSERT INTO carteira_vacina_historico(' +
             'id_tipo_vacina, ' +
             'dt_aplicacao, ' +
             'id_tipo_dose, ' +
@@ -64,7 +64,7 @@ async function insertHistoricoVacinacao(historicoVacinacao) {
 async function updateHistoricoVacinacao(id, cpf, historicoVacinacao) {
     try {
         const conn = await mysqlDb.connect();
-        const sql = 'UPDATE carteira_historico_vacinacao ' +
+        const sql = 'UPDATE carteira_vacina_historico ' +
             'SET id_tipo_vacina=?, ' +
             'dt_aplicacao=?, ' +
             'id_tipo_dose=?, ' +
@@ -101,7 +101,7 @@ async function updateHistoricoVacinacao(id, cpf, historicoVacinacao) {
 async function deleteHistoricoVacinacao(id, cpf) {
     try {
         const conn = await mysqlDb.connect();
-        const sql = 'DELETE FROM carteira_historico_vacinacao WHERE id=? AND cpf=?';
+        const sql = 'DELETE FROM carteira_vacina_historico WHERE id=? AND cpf=?';
         return await conn.query(sql, [id], [cpf]);
     }catch(error){
         console.log(error);

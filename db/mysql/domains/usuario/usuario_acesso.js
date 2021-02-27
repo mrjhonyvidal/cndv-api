@@ -8,7 +8,7 @@ async function checkUsuarioExiste(cpf) {
             'senha, ' +
             'nome, ' +
             'email ' +
-            'FROM carteira_dados_pessoais_cidadao WHERE cpf=?;';
+            'FROM carteira_vacina WHERE cpf=?;';
 
         const values = [
             cpf
@@ -29,7 +29,7 @@ async function selectUsuarioAcesso() {
             'cpf, ' +
             'nome, ' +
             'email ' +
-            'FROM carteira_dados_pessoais_cidadao;');
+            'FROM carteira_vacina;');
         return await rows;
     }catch(error){
         console.log(error);
@@ -40,7 +40,7 @@ async function selectUsuarioAcesso() {
 async function insertUsuarioAcesso(usuarioAcesso) {
     try{
         const conn      = await mysqlDb.connect();
-        const sql       = 'INSERT INTO carteira_dados_pessoais_cidadao(' +
+        const sql       = 'INSERT INTO carteira_vacina(' +
             'cpf, ' +
             'rg, ' +
             'senha, ' +
@@ -92,7 +92,7 @@ async function insertUsuarioAcesso(usuarioAcesso) {
 async function updateUsuarioAcesso(cpf, usuarioAcesso) {
     try {
         const conn = await mysqlDb.connect();
-        const sql = 'UPDATE carteira_dados_pessoais_cidadao ' +
+        const sql = 'UPDATE carteira_vacina ' +
             'SET nome=?, ' +
             'senha=?, ' +
             'email=?' +

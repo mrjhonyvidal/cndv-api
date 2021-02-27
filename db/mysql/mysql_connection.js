@@ -1,4 +1,4 @@
-require('dotenv').config({path:'env/dev.env'});
+require('dotenv').config({path:'env/qa.env'});
 
 async function connect(){
     if (global.connection && global.connection.state !== 'disconnected'){
