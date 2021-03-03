@@ -19,11 +19,13 @@ const typeDefs = gql`
         nome: String
     }
     
+    scalar Date
+    
     type HistoricoVacinacao {
         id: ID
         cpf: String        
         tipo_vacina_descricao: String
-        dt_aplicacao: String        
+        dt_aplicacao: Date        
         tipo_dose_descricao: String                
         tipo_dose: String
         lote: String

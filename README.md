@@ -94,14 +94,11 @@ query obtenerUsuario($token: String!){
 
 ```
 
-### Deploy to Heroku
+### Deploy backend to Heroku Server
+One extra information about our server is that DB is not in Heroku stack, it only holds the Node.js/Express Server.
 ```
 heroku
 heroku login
 heroku create --remote production
 git push production main
-```
-
-```
-
 ```
