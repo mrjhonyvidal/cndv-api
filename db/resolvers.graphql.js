@@ -78,10 +78,10 @@ const carteira_tipo_vacinas = [
         pais: 'BRA'
     }
 ]; // TODO get tipo vacinas from DB
-
 const UsuarioAcessoModel = require('../db/mysql/domains/usuario/usuario_acesso');
 const TipoVacinaModel = require('../db/mysql/domains/vacina/tipo_vacina');
-
+const HistoricoVacinaModel = require('../db/mysql/domains/carteira_medica_cidadao/historico_vacinas');
+const CampanhaModel = require('../db/mysql/domains/campanha/campanhas');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -89,7 +89,6 @@ const createToken = (user, secretTokenKey, expiresIn) => {
     const { cpf } = user;
     return jwt.sign({ cpf }, secretTokenKey, { expiresIn })
 }
-
 // TODO Extract Query and Mutation for each Module we have
 // Ex:. carteiraTipoVacionaResolver, dadosPessoaisCidadaoResolver, acessoUsuarioResolver, tipoDoseResolver, tipoSanguineoResolver, historicoVacinacaoResolver
 const resolvers = {
@@ -100,10 +99,34 @@ const resolvers = {
             const result = carteira_tipo_vacinas.filter(tipo => tipo.descricao === input.descricao);
             return result;
         },
-        obtainUsuario: async (_, { token }) => {
+        obtenerUsuario: async (_, { token }) => {
             const usuarioCPF = await jwt.verify(token, process.env.SECRET_JWT);
             return usuarioCPF;
-        }
+        },
+        obtenerCampanhas: async() => {
+            try{
+                const campanhas = await CampanhaModel.selectCampanhas();
+                return campanhas;
+            }catch(error){
+
+            }
+        },
+        obtenerHistoricoVacinacao: async(_, {cpf}) => {
+            try{
+                const historicoVacinacao = await HistoricoVacinaModel.selectHistoricoVacinacao(cpf);
+                return historicoVacinacao;
+            }catch(error){
+                console.log(error);
+            }
+        },
+        /*obtenerDetallheHistoricoVacinacao: async(_, {id}) => {
+            try{
+                const detalheHistoricoVacinacao = await HistoricoVacinaModel.selectDetalheHistoricoVacinacao();
+                return detalheHistoricoVacinacao;
+            }catch(error){
+
+            }
+        }*/
     },
     Mutation: {
         novoUsuarioAcesso: async (_, { input }) => {
@@ -153,7 +176,6 @@ const resolvers = {
             try {
                 const result = await TipoVacinaModel.insertTipoVacina(input);
                 return result[0].rowsAffected;
-
             } catch(error) {
                 console.log(error);
             }

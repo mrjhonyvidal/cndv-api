@@ -82,8 +82,8 @@ mutation autenticarUsuario($input: AutenticarInput){
 
 #### Obtener Token Usuario e CPF como payload
 ```
-query obtainUsuario($token: String!){
-  obtainUsuario(token: $token) {
+query obtenerUsuario($token: String!){
+  obtenerUsuario(token: $token) {
     cpf
   }
 }

@@ -15,7 +15,7 @@ async function insertTipoVacina(tipoVacina) {
     try{
         const conn      = await mysqlDb.connect();
         const sql       = 'INSERT INTO carteira_tipo_vacina(id, descricao, pais, empresa) VALUES (?,?,?,?);';
-        const values    = [20, tipoVacina.descricao, 'BRA', '07346574000165']; // TODO pais and empresa pre-fixed, let dynamically and send on request
+        const values    = [tipoVacina.id, tipoVacina.descricao, 'BRA', '07346574000165']; // TODO pais and empresa pre-fixed, let dynamically and send on request
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);

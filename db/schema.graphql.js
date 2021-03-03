@@ -19,11 +19,48 @@ const typeDefs = gql`
         nome: String
     }
     
+    type HistoricoVacinacao {
+        id: ID
+        cpf: String        
+        tipo_vacina_descricao: String
+        dt_aplicacao: String        
+        tipo_dose_descricao: String                
+        tipo_dose: String
+        lote: String
+        codigo: String
+        nome_aplicador: String
+        reg_profissional: String
+        unidade_saude: String
+    }
+    
+    type Campanha {        
+        id: ID
+        nome: String
+        idade_inicio: Int
+        idade_final: Int
+        municipio: String
+        uf: String                
+    }       
+    
     type TipoVacina {
         id: ID
         descricao: String
-    }      
+    }
     
+    input CampanhaInput{
+        id: ID
+        nome: String
+        idade_inicio: Int
+        idade_final: Int
+        municipio: String
+        uf: String
+    } 
+    
+    ##input DetalheHistoricoVacinacaoInput{
+    ##   id: ID
+    ##   cpf: String
+    ##}          
+       
     input CarteiraTipoVacinasInput {
         descricao: String
     }
@@ -41,6 +78,7 @@ const typeDefs = gql`
     }
     
     input TipoVacinaInput {
+        id: Int
         descricao: String!
     }
     
@@ -49,7 +87,17 @@ const typeDefs = gql`
         getCarteiraTipoVacina(input: CarteiraTipoVacinasInput!) : [CarteiraTipoVacinas]
         
         # Usuario Acesso
-        obtainUsuario(token: String!): UsuarioAcesso
+        obtenerUsuario(token: String!): UsuarioAcesso
+        
+        # Historico Vacinacao
+        obtenerHistoricoVacinacao(cpf: String!): [HistoricoVacinacao]
+        ##obtenerDetalheHistoricoVacinacao(input: DetalheHistoricoVacinacaoInput!): HistoricoVacinacao
+        
+        # Dados Pessoais Cidadao
+               
+        # Campanhas
+        obtenerCampanhas: [Campanha]
+        obtenerCampanhasPorIdade(input: CampanhaInput!): [Campanha]
     }
          
     type Mutation {
@@ -57,23 +105,19 @@ const typeDefs = gql`
         novoUsuarioAcesso(input: UsuarioInput): UsuarioAcesso
         autenticarUsuario(input: AutenticarInput): UsuarioToken
         
+        # Historico Vacinacao
+        
+        # Dados Pessoais Cidadao
+               
+        # Campanhas
         
         # Tipo Vacina
-        novoTipoVacina(input: TipoVacinaInput): TipoVacina
-        
+        novoTipoVacina(input: TipoVacinaInput): TipoVacina        
         
         # Tipo Sanguineo
         
         
-        # Tipo Dose
-        
-        
-        # Dados Pessoais Cidadao
-        
-        
-        # Historico Vacinacao
-        
-                         
+        # Tipo Dose                                                                                 
     }
 `;
 
