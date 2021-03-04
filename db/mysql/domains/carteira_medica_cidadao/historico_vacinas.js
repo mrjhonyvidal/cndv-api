@@ -160,6 +160,7 @@ async function deleteHistoricoVacinacao(id, cpf) {
 
 module.exports = {
     selectHistoricoVacinacao,
+    selectHistoricoVacinacaoByIDAndCPF,
     insertHistoricoVacinacao,
     updateHistoricoVacinacao,
     deleteHistoricoVacinacao

@@ -197,9 +197,27 @@ const resolvers = {
                 console.log(error);
             }
         },
+        novaCampanha: async (_, {input}) => {
+          try {
+              const result = await CampanhaModel.insertCampanha(input);
+              return result[0].rowsAffected;
+          } catch (error) {
+              console.log(error);
+          }
+        },
+        eliminarCampanha: async(_, {id}) => {
+            let campanha = await CampanhaModel.selectHistoricoVacinacao(cpf);
+
+            if (!campanha) {
+                throw new Error('Campanha nao encontrada');
+            }
+
+            await CampanhaModel.deleteCampanha(id)
+            return "Campanha Eliminada!";
+        },
         atualizarHistoricoVacinacao: async (_, {id, cpf, input}) => {
 
-            let historicoVacinacao = await HistoricoVacinaModel.selectHistoricoVacinacao(cpf);
+            let historicoVacinacao = await HistoricoVacinaModel.selectHistoricoVacinacaoByIDAndCPF(id, cpf);
 
             if (!historicoVacinacao) {
                 throw new Error('Historico de Vacinação não encontrado');
@@ -207,7 +225,17 @@ const resolvers = {
 
             historicoVacinacao = await HistoricoVacinaModel.updateHistoricoVacinacao(id, cpf, input);
             return historicoVacinacao;
-        }
+        },
+        eliminarHistoricoVacinacao: async(_, {id, cpf}) => {
+            let historicoVacinacao = await HistoricoVacinaModel.selectHistoricoVacinacaoByIDAndCPF(id, cpf);
+
+            if (!historicoVacinacao) {
+                throw new Error('Histórico de Vacinação não encontrado!');
+            }
+
+            await HistoricoVacinaModel.deleteHistoricoVacinacao(id, cpf);
+            return "Histórico Vacinação eliminado!";
+        },
     }
 }
 

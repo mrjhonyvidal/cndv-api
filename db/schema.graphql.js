@@ -159,20 +159,23 @@ const typeDefs = gql`
         # Historico Vacinacao
         novoHistoricoVacinacao(input: HistoricoVacinacaoInput): HistoricoVacinacao
         atualizarHistoricoVacinacao(id: ID!, cpf: String!, input: HistoricoVacinacaoInput): HistoricoVacinacao
+        eliminarHistoricoVacinacao(id: ID!, cpf: String!): String
         
         # Dados Pessoais Cidadao
         atualizarDadosPessoais(id: ID!, input: DadosPessoaisInput): DadosPessoais
                
         # Campanhas
+        novaCampanha(input: CampanhaInput): Campanha
         atualizarCampanha(id: ID!, input: CampanhaInput): Campanha
+        eliminarCampanha(id: ID!): String
         
         # Tipo Vacina
         novoTipoVacina(input: TipoVacinaInput): TipoVacina        
         
-        # Tipo Sanguineo
-        
-        
-        # Tipo Dose                                                                                 
+        # Tipo Sanguineo                
+        # Tipo Dose
+        # PostosDeAtendimento                                                                                 
+        # Agendamentos
     }
 `;
 
