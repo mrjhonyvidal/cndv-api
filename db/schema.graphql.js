@@ -1,25 +1,46 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+
+    scalar Date
+
     type CarteiraTipoVacinas{
         descricao: String
         pais: String
     }
     
+    type DadosPessoais {        
+        cpf: String
+        rg: String
+        nome: String
+        dt_nascimento: Date
+        email: String
+        contato: String
+        id_tipo_sanguineo: String
+        doador: String
+        endereco: String
+        numero: String
+        complemento: String
+        bairro: String
+        cidade: String
+        uf: String
+        pais: String
+        cep: String
+        obs: String                
+    }   
+    
     type UsuarioAcesso {
         cpf: String        
         nome: String                
         email: String
-    }
+    }        
     
     type UsuarioToken {
         token: String
         email: String
         cpf: String!
         nome: String
-    }
-    
-    scalar Date
+    }        
     
     type HistoricoVacinacao {
         id: ID
@@ -33,6 +54,8 @@ const typeDefs = gql`
         nome_aplicador: String
         reg_profissional: String
         unidade_saude: String
+        cidade: String
+        uf: String
     }
     
     type Campanha {        
@@ -49,6 +72,37 @@ const typeDefs = gql`
         descricao: String
     }
     
+    input DadosPessoaisInput {
+        rg: String
+        senha: String
+        nome: String
+        email: String
+        contato: String
+        id_tipo_sanguineo: String
+        doador: String
+        endereco: String
+        numero: String
+        complemento: String
+        bairro: String
+        cidade: String
+        uf: String
+        pais: String
+        cep: String
+    }
+    
+    input HistoricoVacinacaoInput{
+        id_tipo_vacina: String
+        dt_aplicacao: String
+        id_tipo_dose: String
+        lote: String
+        codigo: String
+        nome_aplicador: String
+        reg_profissional: String
+        unidade_saude: String
+        cidade: String
+        uf: String
+    }
+    
     input CampanhaInput{
         id: ID
         nome: String
@@ -56,12 +110,7 @@ const typeDefs = gql`
         idade_final: Int
         municipio: String
         uf: String
-    } 
-    
-    ##input DetalheHistoricoVacinacaoInput{
-    ##   id: ID
-    ##   cpf: String
-    ##}          
+    }            
        
     input CarteiraTipoVacinasInput {
         descricao: String
@@ -93,9 +142,9 @@ const typeDefs = gql`
         
         # Historico Vacinacao
         obtenerHistoricoVacinacao(cpf: String!): [HistoricoVacinacao]
-        ##obtenerDetalheHistoricoVacinacao(input: DetalheHistoricoVacinacaoInput!): HistoricoVacinacao
         
         # Dados Pessoais Cidadao
+        obtenerDadosPessoais(cpf: String!): DadosPessoais
                
         # Campanhas
         obtenerCampanhas: [Campanha]
@@ -108,10 +157,14 @@ const typeDefs = gql`
         autenticarUsuario(input: AutenticarInput): UsuarioToken
         
         # Historico Vacinacao
+        novoHistoricoVacinacao(input: HistoricoVacinacaoInput): HistoricoVacinacao
+        atualizarHistoricoVacinacao(id: ID!, cpf: String!, input: HistoricoVacinacaoInput): HistoricoVacinacao
         
         # Dados Pessoais Cidadao
+        atualizarDadosPessoais(id: ID!, input: DadosPessoaisInput): DadosPessoais
                
         # Campanhas
+        atualizarCampanha(id: ID!, input: CampanhaInput): Campanha
         
         # Tipo Vacina
         novoTipoVacina(input: TipoVacinaInput): TipoVacina        

@@ -82,6 +82,7 @@ const UsuarioAcessoModel = require('../db/mysql/domains/usuario/usuario_acesso')
 const TipoVacinaModel = require('../db/mysql/domains/vacina/tipo_vacina');
 const HistoricoVacinaModel = require('../db/mysql/domains/carteira_medica_cidadao/historico_vacinas');
 const CampanhaModel = require('../db/mysql/domains/campanha/campanhas');
+const DadosPessoaisModel = require('../db/mysql/domains/carteira_medica_cidadao/dados_pessoais_cidadao');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -108,7 +109,7 @@ const resolvers = {
                 const campanhas = await CampanhaModel.selectCampanhas();
                 return campanhas;
             }catch(error){
-
+                console.log(error);
             }
         },
         obtenerHistoricoVacinacao: async(_, {cpf}) => {
@@ -119,40 +120,48 @@ const resolvers = {
                 console.log(error);
             }
         },
-        /*obtenerDetallheHistoricoVacinacao: async(_, {id}) => {
+        /*obtenerMensagensNotificacoes: async(_, {cpf}) => {
             try{
-                const detalheHistoricoVacinacao = await HistoricoVacinaModel.selectDetalheHistoricoVacinacao();
-                return detalheHistoricoVacinacao;
+                const historicoVacinacao = await MensagensNotificacoesModel.selectMensagensNotificacoes(cpf);
+                return historicoVacinacao;
             }catch(error){
-
+                console.log(error);
             }
-        }*/
+        },*/
+        obtenerDadosPessoais: async(_, {cpf}) => {
+            try{
+                const dadosPessoais = await DadosPessoaisModel.selectDadosPessoaisCidadao(cpf);
+                return dadosPessoais;
+            }catch(error){
+                console.log(error);
+            }
+        }
     },
     Mutation: {
-        novoUsuarioAcesso: async (_, { input }) => {
+        novoUsuarioAcesso: async (_, {input}) => {
             // TODO apply SPR in this function, too many responsabilities!
 
             // Verify is user is registered
-            const { cpf, email, senha} = input;
+            const {cpf, email, senha} = input;
             const isNewUsuario = await UsuarioAcessoModel.checkUsuarioExiste(cpf);
-            if(isNewUsuario.length > 0) {
+            if (isNewUsuario.length > 0) {
                 throw new Error('Não foi possível realizar o cadastro, por favor entre em contato com o administrador do sistema.')
             }
 
-           // Encrypt password
+            // Encrypt password
             const salt = await bcryptjs.genSalt(10);
             input.senha = await bcryptjs.hash(senha, salt);
 
-           // Save to DB
-            try{
+            // Save to DB
+            try {
                 const result = await UsuarioAcessoModel.insertUsuarioAcesso(input);
                 return result[0].rowsAffected;
-            }catch (error) {
+            } catch (error) {
                 console.log(error);
             }
         },
-        autenticarUsuario: async (_, { input }) => {
-            const { cpf, senha } = input;
+        autenticarUsuario: async (_, {input}) => {
+            const {cpf, senha} = input;
 
             const existeUsuario = await UsuarioAcessoModel.checkUsuarioExiste(cpf);
             if (!existeUsuario[0]) {
@@ -172,13 +181,32 @@ const resolvers = {
                 nome: existeUsuario[0].nome
             }
         },
-        novoTipoVacina: async(_, { input }) => {
+        novoTipoVacina: async (_, {input}) => {
             try {
                 const result = await TipoVacinaModel.insertTipoVacina(input);
                 return result[0].rowsAffected;
-            } catch(error) {
+            } catch (error) {
                 console.log(error);
             }
+        },
+        novoHistoricoVacinacao: async (_, {input}) => {
+            try{
+                const result = await HistoricoVacinaModel.insertHistoricoVacinacao(input);
+                return result[0].rowsAffected;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        atualizarHistoricoVacinacao: async (_, {id, cpf, input}) => {
+
+            let historicoVacinacao = await HistoricoVacinaModel.selectHistoricoVacinacao(cpf);
+
+            if (!historicoVacinacao) {
+                throw new Error('Historico de Vacinação não encontrado');
+            }
+
+            historicoVacinacao = await HistoricoVacinaModel.updateHistoricoVacinacao(id, cpf, input);
+            return historicoVacinacao;
         }
     }
 }

@@ -1,9 +1,9 @@
 mysqlDb = require('../../mysql_connection');
 
-async function selectDadosPessoaisCidadao() {
+async function selectDadosPessoaisCidadao(cpf) {
     try{
         const conn      = await mysqlDb.connect();
-        const [rows]    = await conn.query('SELECT ' +
+        const sql       = 'SELECT ' +
             'cpf, ' +
             'rg, ' +
             'nome, ' +
@@ -21,8 +21,14 @@ async function selectDadosPessoaisCidadao() {
             'pais ' +
             'cep ' +
             'obs ' +
-            'FROM carteira_vacina;');
+            'FROM carteira_vacina_historico WHERE cpf=?';
+
+        const values = [
+            cpf
+        ];
+        const [rows] = await conn.query(sql, values);
         return await rows;
+
     }catch(error){
         console.log(error);
         process.exit(1);

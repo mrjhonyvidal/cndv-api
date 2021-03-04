@@ -36,6 +36,43 @@ async function selectHistoricoVacinacao(cpf) {
     }
 }
 
+async function selectHistoricoVacinacaoByIDAndCPF(id, cpf) {
+    try{
+        const conn      = await mysqlDb.connect();
+        const sql       = 'SELECT ' +
+            'carteira_vacina_historico.id, ' +
+            'carteira_vacina_historico.cpf, ' +
+            'carteira_tipo_vacina.descricao as tipo_vacina_descricao, ' +
+            'carteira_vacina_historico.dt_aplicacao, ' +
+            'carteira_tipo_dose.descricao as tipo_dose_descricao, ' +
+            'carteira_vacina_historico.lote, ' +
+            'carteira_vacina_historico.codigo, ' +
+            'carteira_vacina_historico.nome_aplicador, ' +
+            'carteira_vacina_historico.reg_profissional, ' +
+            'carteira_vacina_historico.unidade_saude, ' +
+            'carteira_vacina_historico.cidade, ' +
+            'carteira_vacina_historico.uf, ' +
+            'carteira_vacina_historico.obs ' +
+            'FROM carteira_vacina_historico, ' +
+            'carteira_tipo_dose, ' +
+            'carteira_tipo_vacina ' +
+            'WHERE carteira_tipo_vacina.id = carteira_vacina_historico.id_tipo_vacina ' +
+            'AND carteira_tipo_dose.id = carteira_vacina_historico.id_tipo_dose ' +
+            'AND carteira_vacina_historico.id=? AND carteira_vacina_historico.cpf=?';
+
+        const values = [
+            id,
+            cpf
+        ];
+        const [rows] = await conn.query(sql, values);
+        return await rows;
+
+    }catch(error){
+        console.log(error);
+        process.exit(1);
+    }
+}
+
 async function insertHistoricoVacinacao(historicoVacinacao) {
     try{
         const conn      = await mysqlDb.connect();
@@ -87,7 +124,7 @@ async function updateHistoricoVacinacao(id, cpf, historicoVacinacao) {
             'cidade=?, ' +
             'uf=?, ' +
             'obs=?' +
-            ' WHERE cpf=?';
+            ' WHERE cpf=? AND id=?';
         const values = [
             historicoVacinacao.id_tipo_vacina,
             historicoVacinacao.dt_aplicacao,
@@ -100,7 +137,8 @@ async function updateHistoricoVacinacao(id, cpf, historicoVacinacao) {
             historicoVacinacao.cidade,
             historicoVacinacao.uf,
             historicoVacinacao.obs,
-            cpf
+            cpf,
+            id
         ];
         return await conn.query(sql, values);
     }catch(error){
