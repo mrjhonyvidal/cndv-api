@@ -140,6 +140,9 @@ const typeDefs = gql`
         # Usuario Acesso
         obtenerUsuario(token: String!): UsuarioAcesso
         
+        # Cidadoes
+        obtenerCidadoes: [DadosPessoais]
+        
         # Historico Vacinacao
         obtenerHistoricoVacinacao(cpf: String!): [HistoricoVacinacao]
         

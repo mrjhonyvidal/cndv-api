@@ -1,6 +1,29 @@
 mysqlDb = require('../../mysql_connection');
 
-async function checkUsuarioExiste(cpf) {
+async function checkUsuarioExiste(cpf, email) {
+    try{
+        const conn      = await mysqlDb.connect();
+        const sql       = 'SELECT ' +
+            'cpf, ' +
+            'senha, ' +
+            'nome, ' +
+            'email ' +
+            'FROM carteira_vacina WHERE cpf=? OR email=?;';
+
+        const values = [
+            cpf,
+            email
+        ];
+        const [rows] = await conn.query(sql, values);
+        return await rows;
+
+    }catch(error){
+        console.log(error);
+        process.exit(1);
+    }
+}
+
+async function checkUsuarioExisteWithCPF(cpf) {
     try{
         const conn      = await mysqlDb.connect();
         const sql       = 'SELECT ' +
@@ -22,15 +45,21 @@ async function checkUsuarioExiste(cpf) {
     }
 }
 
-async function selectUsuarioAcesso() {
+async function selectUsuarioAcesso(cpf) {
     try{
         const conn      = await mysqlDb.connect();
-        const [rows]    = await conn.query('SELECT ' +
+        const  sql       = 'SELECT ' +
             'cpf, ' +
             'nome, ' +
             'email ' +
-            'FROM carteira_vacina;');
+            'FROM carteira_vacina WHERE cpf=?;';
+
+        const values = [
+            cpf
+        ];
+        const [rows] = await conn.query(sql, values);
         return await rows;
+
     }catch(error){
         console.log(error);
         process.exit(1);
@@ -112,6 +141,7 @@ async function updateUsuarioAcesso(cpf, usuarioAcesso) {
 
 module.exports = {
     checkUsuarioExiste,
+    checkUsuarioExisteWithCPF,
     selectUsuarioAcesso,
     updateUsuarioAcesso,
     insertUsuarioAcesso

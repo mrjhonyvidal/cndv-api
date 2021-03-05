@@ -104,6 +104,14 @@ const resolvers = {
             const usuarioCPF = await jwt.verify(token, process.env.SECRET_JWT);
             return usuarioCPF;
         },
+        obtenerCidadoes: async() => {
+            try{
+                const cidadoes = await DadosPessoaisModel.selectTodosCidadoes();
+                return cidadoes;
+            }catch(error){
+                console.log(error);
+            }
+        },
         obtenerCampanhas: async() => {
             try{
                 const campanhas = await CampanhaModel.selectCampanhas();
@@ -143,9 +151,9 @@ const resolvers = {
 
             // Verify is user is registered
             const {cpf, email, senha} = input;
-            const isNewUsuario = await UsuarioAcessoModel.checkUsuarioExiste(cpf);
+            const isNewUsuario = await UsuarioAcessoModel.checkUsuarioExiste(cpf, email);
             if (isNewUsuario.length > 0) {
-                throw new Error('Não foi possível realizar o cadastro, por favor entre em contato com o administrador do sistema.')
+                throw new Error('Já existe um usuário cadastrado com esse cpf ou email.')
             }
 
             // Encrypt password
@@ -157,20 +165,20 @@ const resolvers = {
                 const result = await UsuarioAcessoModel.insertUsuarioAcesso(input);
                 return result[0].rowsAffected;
             } catch (error) {
-                console.log(error);
+                throw new Error(error);
             }
         },
         autenticarUsuario: async (_, {input}) => {
             const {cpf, senha} = input;
 
-            const existeUsuario = await UsuarioAcessoModel.checkUsuarioExiste(cpf);
+            const existeUsuario = await UsuarioAcessoModel.checkUsuarioExisteWithCPF(cpf);
             if (!existeUsuario[0]) {
-                throw new Error('Não possível realizar a autenticação do usuário, por favor entre em contato com o administrador');
+                throw new Error('CPF ou senha inválida.');
             }
 
             const isPasswordCorrect = await bcryptjs.compare(senha, existeUsuario[0].senha);
             if (!isPasswordCorrect) {
-                throw new Error('Não possível realizar a autenticação do usuário');
+                throw new Error('Senha inválida');
             }
 
             // Generate JWT token

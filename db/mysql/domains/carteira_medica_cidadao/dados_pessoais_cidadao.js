@@ -7,25 +7,58 @@ async function selectDadosPessoaisCidadao(cpf) {
             'cpf, ' +
             'rg, ' +
             'nome, ' +
-            'dt_nascimento ' +
-            'email ' +
-            'contato ' +
-            'id_tipo_sanguineo ' +
-            'doador ' +
-            'endereco ' +
-            'numero ' +
-            'complemento ' +
-            'bairro ' +
-            'cidade ' +
-            'uf ' +
-            'pais ' +
-            'cep ' +
+            'dt_nascimento, ' +
+            'email, ' +
+            'contato, ' +
+            'id_tipo_sanguineo, ' +
+            'doador, ' +
+            'endereco, ' +
+            'numero, ' +
+            'complemento, ' +
+            'bairro, ' +
+            'cidade, ' +
+            'uf, ' +
+            'pais, ' +
+            'cep, ' +
             'obs ' +
-            'FROM carteira_vacina_historico WHERE cpf=?';
+            'FROM carteira_vacina WHERE cpf=?';
 
         const values = [
             cpf
         ];
+        const [rows] = await conn.query(sql, values);
+        return await rows;
+
+    }catch(error){
+        console.log(error);
+        process.exit(1);
+    }
+}
+
+async function selectTodosCidadoes() {
+    try{
+        const conn      = await mysqlDb.connect();
+        const sql       = 'SELECT ' +
+            'cpf, ' +
+            'rg, ' +
+            'nome, ' +
+            'dt_nascimento, ' +
+            'email, ' +
+            'contato, ' +
+            'id_tipo_sanguineo, ' +
+            'doador, ' +
+            'endereco, ' +
+            'numero, ' +
+            'complemento, ' +
+            'bairro, ' +
+            'cidade, ' +
+            'uf, ' +
+            'pais, ' +
+            'cep, ' +
+            'obs ' +
+            'FROM carteira_vacina';
+
+        const values = [];
         const [rows] = await conn.query(sql, values);
         return await rows;
 
@@ -143,6 +176,7 @@ async function deleteDadosPessoaisCidadao(cpf) {
 
 module.exports = {
     selectDadosPessoaisCidadao,
+    selectTodosCidadoes,
     insertDadosPessoaisCidadao,
     updateDadosPessoaisCidadao,
     deleteDadosPessoaisCidadao
