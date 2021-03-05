@@ -151,7 +151,7 @@ async function deleteHistoricoVacinacao(id, cpf) {
     try {
         const conn = await mysqlDb.connect();
         const sql = 'DELETE FROM carteira_vacina_historico WHERE id=? AND cpf=?';
-        return await conn.query(sql, [id], [cpf]);
+        return await conn.query(sql, [id, cpf]);
     }catch(error){
         console.log(error);
         process.exit(1);

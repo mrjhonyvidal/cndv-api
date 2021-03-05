@@ -102,3 +102,90 @@ heroku login
 heroku create --remote production
 git push production main
 ```
+
+```
+query getCarteiraTipoVacinas {
+  getCarteiraTipoVacinas{
+    descricao
+    pais
+	}
+}
+```
+
+```
+query getCarteiraTipoVacinas {
+  getCarteiraTipoVacinas{
+    descricao
+    pais
+	}
+}
+
+query obtenerHistoricoVacinacao($cpf: String!){
+  obtenerHistoricoVacinacao(cpf: $cpf){
+       id
+       cpf
+       tipo_vacina_descricao
+       dt_aplicacao        
+       tipo_dose_descricao
+       lote
+       codigo
+       nome_aplicador
+       reg_profissional
+       unidade_saude
+  }
+}
+
+{
+  "cpf":""
+}
+
+mutation atualizarHistoricoVacinacao($id: ID!, $cpf: String!, $input: HistoricoVacinacaoInput){
+  atualizarHistoricoVacinacao(id: $id, cpf: $cpf, input: $input) {
+  	id
+    cpf
+    tipo_vacina_descricao
+    dt_aplicacao
+    tipo_dose_descricao
+    lote
+    codigo
+    nome_aplicador
+    reg_profissional
+    unidade_saude
+    cidade
+    uf
+  }
+}
+
+{
+  "id": "3",
+  "cpf": "",
+  "input": {
+    "dt_aplicacao": "2020-07-19",
+    "codigo": "84489399"  
+  }
+}
+
+mutation eliminarHistoricoVacinacao($id: ID!, $cpf: String!) {
+  eliminarHistoricoVacinacao(id: $id, cpf: $cpf)
+}
+
+{
+  "id": "3",
+  "cpf": ""
+}
+
+
+
+query obtainUsuario($token: String!){
+  obtainUsuario(token: $token) {
+    cpf
+  }
+}
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcGYiOiIzNzE5MjM4Njg3MSIsImlhdCI6MTYxNDExNDM3OCwiZXhwIjoxNjE0MjAwNzc4fQ.tJVGQMa4g5MrnKPeqZ0cLeBGdcKD3_9OVkkBjIoQCoU"
+}
+
+
+
+```
