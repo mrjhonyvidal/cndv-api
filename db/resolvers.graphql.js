@@ -86,10 +86,6 @@ const DadosPessoaisModel = require('../db/mysql/domains/carteira_medica_cidadao/
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const createToken = (user, secretTokenKey, expiresIn) => {
-    const { cpf } = user;
-    return jwt.sign({ cpf }, secretTokenKey, { expiresIn })
-}
 // TODO Extract Query and Mutation for each Module we have
 // Ex:. carteiraTipoVacionaResolver, dadosPessoaisCidadaoResolver, acessoUsuarioResolver, tipoDoseResolver, tipoSanguineoResolver, historicoVacinacaoResolver
 const resolvers = {
@@ -100,9 +96,10 @@ const resolvers = {
             const result = carteira_tipo_vacinas.filter(tipo => tipo.descricao === input.descricao);
             return result;
         },
-        obtenerUsuario: async (_, { token }) => {
-            const usuarioCPF = await jwt.verify(token, process.env.SECRET_JWT);
-            return usuarioCPF;
+        obtenerUsuario: async (_, {}, ctx) => {
+            // Apollo has a global context that have access to headers information
+            // This way we don't need to jwt.verify(token,...) anymore
+            return ctx.usuario;
         },
         obtenerCidadoes: async() => {
             try{
@@ -245,6 +242,11 @@ const resolvers = {
             return "Histórico Vacinação eliminado!";
         },
     }
+}
+
+const createToken = (user, secretTokenKey, expiresIn) => {
+    const { cpf, nome, email  } = user;
+    return jwt.sign({ cpf, nome, email }, secretTokenKey, { expiresIn })
 }
 
 module.exports = resolvers;

@@ -58,8 +58,7 @@ async function selectTodosCidadoes() {
             'obs ' +
             'FROM carteira_vacina';
 
-        const values = [];
-        const [rows] = await conn.query(sql, values);
+        const [rows] = await conn.query(sql);
         return await rows;
 
     }catch(error){
