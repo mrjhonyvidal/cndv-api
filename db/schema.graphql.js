@@ -103,8 +103,7 @@ const typeDefs = gql`
         uf: String
     }
     
-    input CampanhaInput{
-        id: ID
+    input CampanhaInput{        
         nome: String
         idade_inicio: Int
         idade_final: Int
@@ -151,7 +150,7 @@ const typeDefs = gql`
                
         # Campanhas
         obtenerCampanhas: [Campanha]
-        obtenerCampanha(id: Int): [Campanha]
+        obtenerCampanha(id: ID): Campanha
         obtenerCampanhasPorIdade(input: CampanhaInput!): [Campanha]
     }
          

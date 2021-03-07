@@ -117,18 +117,18 @@ const resolvers = {
                 console.log(error);
             }
         },
-        obtenerHistoricoVacinacao: async(_, {cpf}) => {
+        obtenerCampanha: async(_, {id}) => {
             try{
-                const historicoVacinacao = await HistoricoVacinaModel.selectHistoricoVacinacao(cpf);
-                return historicoVacinacao;
+                const campanha = await CampanhaModel.selectCampanhaById(id);
+                return campanha[0];
             }catch(error){
                 console.log(error);
             }
         },
-        obtenerCampanha: async(_, {id}) => {
+        obtenerHistoricoVacinacao: async(_, {cpf}) => {
             try{
-                const campanha = await CampanhaModel.selectCampanhaById(id);
-                return campanha;
+                const historicoVacinacao = await HistoricoVacinaModel.selectHistoricoVacinacao(cpf);
+                return historicoVacinacao;
             }catch(error){
                 console.log(error);
             }
@@ -227,6 +227,17 @@ const resolvers = {
 
             await CampanhaModel.deleteCampanha(id)
             return "Campanha Eliminada!";
+        },
+        atualizarCampanha: async (_, {id, input}) => {
+
+            let campanha = await CampanhaModel.selectCampanhaById(id);
+
+            if (!campanha) {
+                throw new Error('Campanha não encontrada');
+            }
+
+            campanha = await CampanhaModel.updateCampanha(id, input);
+            return campanha;
         },
         atualizarHistoricoVacinacao: async (_, {id, cpf, input}) => {
 

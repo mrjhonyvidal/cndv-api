@@ -213,4 +213,55 @@ mutation eliminarCampanha($id: ID!) {
   "id": "1"
 }
 
+
+query obtenerCampanha($id: ID!) {
+      obtenerCampanha(id: $id){
+        id
+        nome
+        idade_inicio
+        idade_final
+        municipio
+        uf
+      }
+    }
+    
+{
+  "id": 10
+}
+
+mutation novaCampanha($input: CampanhaInput) {
+  novaCampanha(input: $input) {
+    id
+    nome
+    idade_inicio
+    idade_final
+    municipio
+    uf
+  }
+}
+
+{
+  "input":{
+    "nome": "Campanha COVID-19 DOSE 1",
+    "idade_inicio": 80,
+    "idade_final": 90,
+    "municipio": "BARUERI",
+    "uf": "SP"
+  }
+}
+
+
+
+mutation atualizarCampanha($id: ID!, $input: CampanhaInput){
+  atualizarCampanha(id: $id, input: $input){
+    id
+    nome
+    idade_inicio
+    idade_final
+    municipio
+    uf
+  }
+}
+
+    
 ```
