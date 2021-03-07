@@ -7,7 +7,6 @@ async function selectCampanhas() {
         return await rows;
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -31,7 +30,6 @@ async function selectCampanhaById(id) {
         return await rows;
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -49,7 +47,6 @@ async function insertCampanha(campanha) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -75,7 +72,6 @@ async function updateCampanha(id, campanha) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -86,7 +82,6 @@ async function deleteCampanha(id) {
         return await conn.query(sql, [id]);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 

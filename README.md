@@ -174,8 +174,6 @@ mutation eliminarHistoricoVacinacao($id: ID!, $cpf: String!) {
   "cpf": ""
 }
 
-
-
 query obtainUsuario($token: String!){
   obtainUsuario(token: $token) {
     cpf
@@ -186,6 +184,33 @@ query obtainUsuario($token: String!){
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcGYiOiIzNzE5MjM4Njg3MSIsImlhdCI6MTYxNDExNDM3OCwiZXhwIjoxNjE0MjAwNzc4fQ.tJVGQMa4g5MrnKPeqZ0cLeBGdcKD3_9OVkkBjIoQCoU"
 }
 
+mutation novaCampanha($input: CampanhaInput) {
+  novaCampanha(input: $input) {
+    id
+    nome
+    idade_inicio
+    idade_final
+    municipio
+    uf
+  }
+}
 
+{
+  "input":{
+    "nome": "Campanha COVID-19 DOSE 1",
+    "idade_inicio": 80,
+    "idade_final": 90,
+    "municipio": "BARUERI",
+    "uf": "SP"
+  }
+}
+
+mutation eliminarCampanha($id: ID!) {
+  eliminarHistoricoVacinacao(id: $id)
+}
+
+{
+  "id": "1"
+}
 
 ```

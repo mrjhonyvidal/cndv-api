@@ -19,7 +19,6 @@ async function checkUsuarioExiste(cpf, email) {
 
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -41,7 +40,6 @@ async function checkUsuarioExisteWithCPF(cpf) {
 
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -62,7 +60,6 @@ async function selectUsuarioAcesso(cpf) {
 
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -114,7 +111,6 @@ async function insertUsuarioAcesso(usuarioAcesso) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -135,7 +131,6 @@ async function updateUsuarioAcesso(cpf, usuarioAcesso) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 

@@ -7,7 +7,6 @@ async function selectTipoDose() {
         return await rows;
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -19,7 +18,6 @@ async function insertTipoDose(tipoDose) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -31,7 +29,6 @@ async function updateTipoDose(id, tipoDose) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -42,7 +39,6 @@ async function deleteTipoDose(id) {
         return await conn.query(sql, [id]);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 

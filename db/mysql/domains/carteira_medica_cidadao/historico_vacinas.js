@@ -32,7 +32,6 @@ async function selectHistoricoVacinacao(cpf) {
 
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -69,7 +68,6 @@ async function selectHistoricoVacinacaoByIDAndCPF(id, cpf) {
 
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -105,7 +103,6 @@ async function insertHistoricoVacinacao(historicoVacinacao) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -143,7 +140,6 @@ async function updateHistoricoVacinacao(id, cpf, historicoVacinacao) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -154,7 +150,6 @@ async function deleteHistoricoVacinacao(id, cpf) {
         return await conn.query(sql, [id, cpf]);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 

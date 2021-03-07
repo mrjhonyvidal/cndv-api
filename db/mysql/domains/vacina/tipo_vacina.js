@@ -7,7 +7,6 @@ async function selectTipoVacina() {
         return await rows;
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -19,7 +18,6 @@ async function insertTipoVacina(tipoVacina) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -31,7 +29,6 @@ async function updateTipoVacina(id, tipoVacina) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -42,7 +39,6 @@ async function deleteTipoVacina(id) {
         return await conn.query(sql, [id]);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 

@@ -151,6 +151,7 @@ const typeDefs = gql`
                
         # Campanhas
         obtenerCampanhas: [Campanha]
+        obtenerCampanha(id: Int): [Campanha]
         obtenerCampanhasPorIdade(input: CampanhaInput!): [Campanha]
     }
          

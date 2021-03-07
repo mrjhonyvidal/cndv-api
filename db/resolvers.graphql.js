@@ -125,6 +125,14 @@ const resolvers = {
                 console.log(error);
             }
         },
+        obtenerCampanha: async(_, {id}) => {
+            try{
+                const campanha = await CampanhaModel.selectCampanhaById(id);
+                return campanha;
+            }catch(error){
+                console.log(error);
+            }
+        },
         /*obtenerMensagensNotificacoes: async(_, {cpf}) => {
             try{
                 const historicoVacinacao = await MensagensNotificacoesModel.selectMensagensNotificacoes(cpf);
@@ -211,7 +219,7 @@ const resolvers = {
           }
         },
         eliminarCampanha: async(_, {id}) => {
-            let campanha = await CampanhaModel.selectHistoricoVacinacao(cpf);
+            let campanha = await CampanhaModel.selectCampanhaById(id);
 
             if (!campanha) {
                 throw new Error('Campanha nao encontrada');

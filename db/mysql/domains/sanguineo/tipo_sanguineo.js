@@ -7,7 +7,6 @@ async function selectTipoSanguineo() {
         return await rows;
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -19,7 +18,6 @@ async function insertTipoSanguineo(tipoSanguineo) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -31,7 +29,6 @@ async function updateTipoSanguineo(tipoSanguineo) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -42,7 +39,6 @@ async function deleteTipoSanguineo(tipo) {
         return await conn.query(sql, [tipo]);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 

@@ -31,7 +31,6 @@ async function selectDadosPessoaisCidadao(cpf) {
 
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -63,7 +62,6 @@ async function selectTodosCidadoes() {
 
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -111,7 +109,6 @@ async function insertDadosPessoaisCidadao(dadosPessoaisCidadao) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -158,7 +155,6 @@ async function updateDadosPessoaisCidadao(cpf, dadosPessoaisCidadao) {
         return await conn.query(sql, values);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
@@ -169,7 +165,6 @@ async function deleteDadosPessoaisCidadao(cpf) {
         return await conn.query(sql, [cpf]);
     }catch(error){
         console.log(error);
-        process.exit(1);
     }
 }
 
