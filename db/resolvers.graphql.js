@@ -144,7 +144,7 @@ const resolvers = {
         obtenerDadosPessoais: async(_, {cpf}) => {
             try{
                 const dadosPessoais = await DadosPessoaisModel.selectDadosPessoaisCidadao(cpf);
-                return dadosPessoais;
+                return dadosPessoais[0];
             }catch(error){
                 console.log(error);
             }
