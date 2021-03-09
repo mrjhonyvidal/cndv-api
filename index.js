@@ -1,4 +1,5 @@
 require('dotenv').config({path:'env/qa.env'});
+require ('newrelic');
 
 const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./db/schema.graphql');

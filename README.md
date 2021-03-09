@@ -6,6 +6,7 @@ O webservice do CDNV está constituído de uma API que centraliza a lógica resp
 - Node.js versão >= 10 e npm ou yarn versão >= 1.22.
 - GraphQL (^15.5.0) e Apolo Server (^2.21.0)
 - MySQL
+- New Relic (Monitoring)
 
 Configure suas variáveis em env/dev.env
 
