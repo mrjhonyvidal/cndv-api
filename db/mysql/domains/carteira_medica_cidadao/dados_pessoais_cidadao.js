@@ -130,8 +130,7 @@ async function updateDadosPessoaisCidadao(cpf, dadosPessoaisCidadao) {
             'cidade=?, ' +
             'uf=?, ' +
             'pais=?, ' +
-            'cep=?, ' +
-            'obs=?' +
+            'cep=?' +
             ' WHERE cpf=?';
         const values = [
             dadosPessoaisCidadao.rg,
@@ -149,7 +148,6 @@ async function updateDadosPessoaisCidadao(cpf, dadosPessoaisCidadao) {
             dadosPessoaisCidadao.uf,
             dadosPessoaisCidadao.pais,
             dadosPessoaisCidadao.cep,
-            dadosPessoaisCidadao.obs,
             cpf
         ];
         return await conn.query(sql, values);

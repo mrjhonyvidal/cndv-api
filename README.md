@@ -264,5 +264,44 @@ mutation atualizarCampanha($id: ID!, $input: CampanhaInput){
   }
 }
 
-    
+
+mutation atualizarDadosPessoais($cpf: String!, $input: DadosPessoaisInput) {
+    atualizarDadosPessoais(cpf: $cpf, input: $input) {
+      cpf
+      rg
+      nome
+      dt_nascimento
+      email
+      contato,
+      id_tipo_sanguineo
+      doador
+      numero
+      complemento
+      bairro
+      cidade
+      uf
+      pais
+      cep
+    }
+  }
+
+{
+  "cpf": "067.879.288-74",  
+  "input": {
+    "rg": "44",
+    "nome": "AU",
+    "dt_nascimento": "2012-01-01",
+    "email": "jj",
+    "contato": "4214",
+    "id_tipo_sanguineo": "4",
+    "doador": "A+",
+    "numero": "41",
+    "complemento": "",
+    "bairro": "OK",
+    "cidade": "1",
+    "uf": "FF",
+    "pais": "PP",
+    "cep": "0022"
+  }
+}
 ```

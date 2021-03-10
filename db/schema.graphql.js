@@ -75,6 +75,7 @@ const typeDefs = gql`
     input DadosPessoaisInput {
         rg: String
         senha: String
+        dt_nascimento: Date 
         nome: String
         email: String
         contato: String
@@ -165,7 +166,7 @@ const typeDefs = gql`
         eliminarHistoricoVacinacao(id: ID!, cpf: String!): String
         
         # Dados Pessoais Cidadao
-        atualizarDadosPessoais(id: ID!, input: DadosPessoaisInput): DadosPessoais
+        atualizarDadosPessoais(cpf: String!, input: DadosPessoaisInput): DadosPessoais
                
         # Campanhas
         novaCampanha(input: CampanhaInput): Campanha

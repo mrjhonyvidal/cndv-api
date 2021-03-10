@@ -239,6 +239,16 @@ const resolvers = {
             campanha = await CampanhaModel.updateCampanha(id, input);
             return campanha;
         },
+        atualizarDadosPessoais: async (_, {cpf, input}) => {
+            let dadosPessoais = await DadosPessoaisModel.selectDadosPessoaisCidadao(cpf);
+
+            if (!dadosPessoais) {
+                throw new Error('Dados Pessoais não encontrados');
+            }
+
+            dadosPessoais = await DadosPessoaisModel.updateDadosPessoaisCidadao(cpf, input);
+            return dadosPessoais;
+        },
         atualizarHistoricoVacinacao: async (_, {id, cpf, input}) => {
 
             let historicoVacinacao = await HistoricoVacinaModel.selectHistoricoVacinacaoByIDAndCPF(id, cpf);
