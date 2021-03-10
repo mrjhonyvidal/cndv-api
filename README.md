@@ -19,7 +19,16 @@ sudo docker-compose up
 ```
 yarn run dev
 open http://localhost:4000/
-``` 
+```
+
+### Deploy backend to Heroku Server
+One extra information about our server is that DB is not in Heroku stack, it only holds the Node.js/Express Server.
+```
+heroku
+heroku login
+heroku create --remote production
+git push production main
+```
 
 ![graphql-apollo-server](graphql-server-screenshot.png)
 ![graphql-apollo-server-query-input](graphql-server-query-input.png)
@@ -95,15 +104,9 @@ query obtenerUsuario($token: String!){
 
 ```
 
-### Deploy backend to Heroku Server
-One extra information about our server is that DB is not in Heroku stack, it only holds the Node.js/Express Server.
-```
-heroku
-heroku login
-heroku create --remote production
-git push production main
-```
 
+
+#### Queries
 ```
 query getCarteiraTipoVacinas {
   getCarteiraTipoVacinas{
@@ -305,3 +308,7 @@ mutation atualizarDadosPessoais($cpf: String!, $input: DadosPessoaisInput) {
   }
 }
 ```
+
+### Resources
+- [Npm package MySQL2 Github](https://github.com/sidorares/node-mysql2)
+- [About Apollo Cache FreeCodeCamp](https://www.freecodecamp.org/news/how-to-update-the-apollo-clients-cache-after-a-mutation-79a0df79b840/)

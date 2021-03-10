@@ -16,7 +16,6 @@ async function checkUsuarioExiste(cpf, email) {
         ];
         const [rows] = await conn.query(sql, values);
         return await rows;
-
     }catch(error){
         console.log(error);
     }
@@ -35,6 +34,7 @@ async function checkUsuarioExisteWithCPF(cpf) {
         const values = [
             cpf
         ];
+
         const [rows] = await conn.query(sql, values);
         return await rows;
 
