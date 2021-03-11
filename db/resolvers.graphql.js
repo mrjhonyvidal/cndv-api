@@ -83,6 +83,7 @@ const TipoVacinaModel = require('../db/mysql/domains/vacina/tipo_vacina');
 const HistoricoVacinaModel = require('../db/mysql/domains/carteira_medica_cidadao/historico_vacinas');
 const CampanhaModel = require('../db/mysql/domains/campanha/campanhas');
 const DadosPessoaisModel = require('../db/mysql/domains/carteira_medica_cidadao/dados_pessoais_cidadao');
+const CidadeModel = require('../db/mysql/domains/localizacao/cidade');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -146,6 +147,13 @@ const resolvers = {
                 const dadosPessoais = await DadosPessoaisModel.selectDadosPessoaisCidadao(cpf);
                 return dadosPessoais[0];
             }catch(error){
+                console.log(error);
+            }
+        },
+        obtenerCidades: async() => {
+            try {
+                return await CidadeModel.selectCidades();
+            } catch (error) {
                 console.log(error);
             }
         }

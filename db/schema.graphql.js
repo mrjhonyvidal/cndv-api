@@ -63,7 +63,12 @@ const typeDefs = gql`
         nome: String
         idade_inicio: Int
         idade_final: Int
-        municipio: String
+        cidade: String
+        uf: String                
+    }
+    
+    type Cidade {        
+        cidade: String
         uf: String                
     }       
     
@@ -108,7 +113,7 @@ const typeDefs = gql`
         nome: String
         idade_inicio: Int
         idade_final: Int
-        municipio: String
+        cidade: String
         uf: String
     }            
        
@@ -153,6 +158,9 @@ const typeDefs = gql`
         obtenerCampanhas: [Campanha]
         obtenerCampanha(id: ID): Campanha
         obtenerCampanhasPorIdade(input: CampanhaInput!): [Campanha]
+        
+        # Location
+        obtenerCidades: [Cidade]
     }
          
     type Mutation {

@@ -194,7 +194,7 @@ mutation novaCampanha($input: CampanhaInput) {
     nome
     idade_inicio
     idade_final
-    municipio
+    cidade
     uf
   }
 }
@@ -204,7 +204,7 @@ mutation novaCampanha($input: CampanhaInput) {
     "nome": "Campanha COVID-19 DOSE 1",
     "idade_inicio": 80,
     "idade_final": 90,
-    "municipio": "BARUERI",
+    "cidade": "BARUERI",
     "uf": "SP"
   }
 }
@@ -224,7 +224,7 @@ query obtenerCampanha($id: ID!) {
         nome
         idade_inicio
         idade_final
-        municipio
+        cidade
         uf
       }
     }
@@ -239,7 +239,7 @@ mutation novaCampanha($input: CampanhaInput) {
     nome
     idade_inicio
     idade_final
-    municipio
+    cidade
     uf
   }
 }
@@ -249,7 +249,7 @@ mutation novaCampanha($input: CampanhaInput) {
     "nome": "Campanha COVID-19 DOSE 1",
     "idade_inicio": 80,
     "idade_final": 90,
-    "municipio": "BARUERI",
+    "cidade": "BARUERI",
     "uf": "SP"
   }
 }
@@ -262,7 +262,7 @@ mutation atualizarCampanha($id: ID!, $input: CampanhaInput){
     nome
     idade_inicio
     idade_final
-    municipio
+    cidade
     uf
   }
 }

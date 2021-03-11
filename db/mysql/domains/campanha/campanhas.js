@@ -3,7 +3,7 @@ mysqlDb = require('../../mysql_connection');
 async function selectCampanhas() {
     try{
         const conn      = await mysqlDb.connect();
-        const [rows]    = await conn.query('SELECT id, nome, idade_inicio, idade_final, municipio, uf FROM campanhas;');
+        const [rows]    = await conn.query('SELECT id, nome, idade_inicio, idade_final, cidade, uf FROM campanhas;');
         return await rows;
     }catch(error){
         console.log(error);
@@ -18,7 +18,7 @@ async function selectCampanhaById(id) {
             'campanhas.nome, ' +
             'campanhas.idade_inicio, ' +
             'campanhas.idade_final, ' +
-            'campanhas.municipio, ' +
+            'campanhas.cidade, ' +
             'campanhas.uf ' +
             'FROM campanhas ' +
             'WHERE campanhas.id=?';
@@ -36,12 +36,12 @@ async function selectCampanhaById(id) {
 async function insertCampanha(campanha) {
     try{
         const conn      = await mysqlDb.connect();
-        const sql       = 'INSERT INTO campanhas(nome, idade_inicio, idade_final, municipio, uf) VALUES (?,?,?,?,?);';
+        const sql       = 'INSERT INTO campanhas(nome, idade_inicio, idade_final, cidade, uf) VALUES (?,?,?,?,?);';
         const values    = [
             campanha.nome,
             campanha.idade_inicio,
             campanha.idade_final,
-            campanha.municipio,
+            campanha.cidade,
             campanha.uf
         ];
         return await conn.query(sql, values);
@@ -57,7 +57,7 @@ async function updateCampanha(id, campanha) {
             'SET nome=?, ' +
             'idade_inicio=?, ' +
             'idade_final=?, ' +
-            'municipio=?, ' +
+            'cidade=?, ' +
             'uf=? ' +
             'WHERE id=?';
 
@@ -65,7 +65,7 @@ async function updateCampanha(id, campanha) {
             campanha.nome,
             campanha.idade_inicio,
             campanha.idade_final,
-            campanha.municipio,
+            campanha.cidade,
             campanha.uf,
             id
         ];
