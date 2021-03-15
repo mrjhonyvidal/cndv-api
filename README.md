@@ -312,3 +312,6 @@ mutation atualizarDadosPessoais($cpf: String!, $input: DadosPessoaisInput) {
 ### Resources
 - [Npm package MySQL2 Github](https://github.com/sidorares/node-mysql2)
 - [About Apollo Cache FreeCodeCamp](https://www.freecodecamp.org/news/how-to-update-the-apollo-clients-cache-after-a-mutation-79a0df79b840/)
+- [Firebase Node.js Code source](https://github.com/firebase/quickstart-nodejs)
+- [Google API Client Libraries](https://developers.google.com/api-client-library/)
+- [Firebase Cloud Messaging - Build App Server sed requests](https://firebase.google.com/docs/cloud-messaging/send-message)

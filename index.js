@@ -27,9 +27,14 @@ const server = new ApolloServer({
 });
 
 // Temporary - check Firebase Cloud Messaging via REST HTTP v1 using OAuth2
-/**const firebaseOAuth2Token = firebaseSDK.getAccessToken().then(function(result){
+/*const firebaseOAuth2Token = firebaseSDK.getAccessToken().then(function(result){
     console.log(result)
-});**/
+});*/
+/*firebaseSDK.sendFcmMessage(firebaseSDK.buildToUniqueDeviceTokenMessage(
+    "Campanha Vacinação Covid-19 Barueri",
+    "Campanha Vacinação COVID-19 para pessoas de 70 a 80 anos em Barueri, veja onde você pode vacinar.",
+    ""
+));*/
 
 const PORT = process.env.PORT || 4000;
 

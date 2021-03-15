@@ -30,4 +30,72 @@ function getAccessToken() {
     });
 }
 
-module.exports = { getAccessToken };
+/**
+ * Send HTTP request to FCM with given message
+**/
+function sendFcmMessage(fcmMessage) {
+    getAccessToken().then(function(accessToken){
+        const options = {
+            hostname: HOST,
+            path: PATH,
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            }
+        }
+
+        const request = https.request(options, function(resp){
+            resp.setEncoding('utf8');
+            resp.on('data', function(data){
+              console.log('Message sent to Firebase for delivery, response:');
+              console.log(data);
+            })
+        });
+
+        request.on('error', function(err){
+            console.log('Unable to send message to Firebase');
+            console.log(err);
+        });
+
+        request.write(JSON.stringify(fcmMessage));
+        request.end();
+    });
+}
+
+function buildCommonMessage() {
+    return {
+        'message': {
+            'topic': 'campanhas',
+            'notification': {
+                "title": "Campanha Vacinação Covid-19 Barueri",
+                "body": "Campanha Vacinação COVID-19 para pessoas de 70 a 80 anos em Barueri, veja onde você pode vacinar."
+            }
+        }
+    };
+}
+
+function buildToUniqueDeviceTokenMessage(messageTitle, messageBody, userDeviceUniqueToken){
+    return {
+        "message": {
+            "data": {
+                "click_action": "FLUTTER_NOTIFICATION_CLICK",
+                "title": messageTitle,
+                "body": messageBody
+            },
+            "notification": {
+                "title": messageTitle,
+                "body": messageBody
+            },
+            "android":{
+                "priority":"high"
+            },
+            "token": userDeviceUniqueToken
+        }
+    }
+}
+
+module.exports = {
+    buildCommonMessage,
+    sendFcmMessage,
+    buildToUniqueDeviceTokenMessage
+};
