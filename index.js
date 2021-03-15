@@ -1,9 +1,10 @@
 require('dotenv').config({path:'env/qa.env'});
 
 const { ApolloServer } = require('apollo-server');
-const typeDefs = require('./db/schema.graphql');
-const resolvers = require('./db/resolvers.graphql');
+const typeDefs = require('./graphql/schema.graphql');
+const resolvers = require('./graphql/resolvers.graphql');
 const jwt = require('jsonwebtoken');
+const firebaseSDK = require('./services/firebase/oauth2_access_token');
 
 const server = new ApolloServer({
     typeDefs,
@@ -24,6 +25,12 @@ const server = new ApolloServer({
         }
     }
 });
+
+// Temporary - check Firebase Cloud Messaging via REST HTTP v1 using OAuth2
+/**const firebaseOAuth2Token = firebaseSDK.getAccessToken().then(function(result){
+    console.log(result)
+});**/
+
 const PORT = process.env.PORT || 4000;
 
 server.listen(PORT).then( ({url}) => {
