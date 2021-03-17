@@ -64,7 +64,8 @@ const typeDefs = gql`
         idade_inicio: Int
         idade_final: Int
         cidade: String
-        uf: String                
+        uf: String
+        descricao: String            
     }
     
     type Cidade {        
@@ -115,6 +116,7 @@ const typeDefs = gql`
         idade_final: Int
         cidade: String
         uf: String
+        descricao: String
     }            
        
     input CarteiraTipoVacinasInput {

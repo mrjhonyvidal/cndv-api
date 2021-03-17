@@ -33,7 +33,7 @@ const server = new ApolloServer({
 /*firebaseSDK.sendFcmMessage(firebaseSDK.buildToUniqueDeviceTokenMessage(
     "Campanha Vacinação Covid-19 Barueri",
     "Campanha Vacinação COVID-19 para pessoas de 70 a 80 anos em Barueri, veja onde você pode vacinar.",
-    ""
+    "HereGoesTheDeviceToken"
 ));*/
 
 const PORT = process.env.PORT || 4000;

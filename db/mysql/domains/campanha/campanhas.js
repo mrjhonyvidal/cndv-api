@@ -3,7 +3,7 @@ mysqlDb = require('../../mysql_connection');
 async function selectCampanhas() {
     try{
         const conn      = await mysqlDb.connect();
-        const [rows]    = await conn.query('SELECT id, nome, idade_inicio, idade_final, cidade, uf FROM campanhas;');
+        const [rows]    = await conn.query('SELECT id, nome, idade_inicio, idade_final, cidade, uf, descricao FROM campanhas;');
         return await rows;
     }catch(error){
         console.log(error);
@@ -19,7 +19,8 @@ async function selectCampanhaById(id) {
             'campanhas.idade_inicio, ' +
             'campanhas.idade_final, ' +
             'campanhas.cidade, ' +
-            'campanhas.uf ' +
+            'campanhas.uf, ' +
+            'campanhas.descricao ' +
             'FROM campanhas ' +
             'WHERE campanhas.id=?';
 
@@ -42,7 +43,8 @@ async function insertCampanha(campanha) {
             campanha.idade_inicio,
             campanha.idade_final,
             campanha.cidade,
-            campanha.uf
+            campanha.uf,
+            campanha.descricao
         ];
         return await conn.query(sql, values);
     }catch(error){
@@ -58,7 +60,8 @@ async function updateCampanha(id, campanha) {
             'idade_inicio=?, ' +
             'idade_final=?, ' +
             'cidade=?, ' +
-            'uf=? ' +
+            'uf=?, ' +
+            'descricao=? ' +
             'WHERE id=?';
 
         const values = [
@@ -67,6 +70,7 @@ async function updateCampanha(id, campanha) {
             campanha.idade_final,
             campanha.cidade,
             campanha.uf,
+            campanha.descricao,
             id
         ];
         return await conn.query(sql, values);
