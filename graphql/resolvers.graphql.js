@@ -97,10 +97,12 @@ const resolvers = {
             const result = carteira_tipo_vacinas.filter(tipo => tipo.descricao === input.descricao);
             return result;
         },
-        obtenerUsuario: async (_, {}, ctx) => {
+        obtenerUsuario: async (_, {token}, ctx) => {
             // Apollo has a global context that have access to headers information
             // This way we don't need to jwt.verify(token,...) anymore
-            return ctx.usuario;
+            //return ctx.usuario;
+            const usuarioCPF = await jwt.verify(token, process.env.SECRET_JWT);
+            return usuarioCPF;
         },
         obtenerCidadoes: async() => {
             try{

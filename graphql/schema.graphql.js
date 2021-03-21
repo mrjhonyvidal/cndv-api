@@ -145,7 +145,7 @@ const typeDefs = gql`
         getCarteiraTipoVacina(input: CarteiraTipoVacinasInput!) : [CarteiraTipoVacinas]
         
         # Usuario Acesso
-        obtenerUsuario: UsuarioAcesso
+        obtenerUsuario(token: String!): UsuarioAcesso                
         
         # Cidadoes
         obtenerCidadoes: [DadosPessoais]
