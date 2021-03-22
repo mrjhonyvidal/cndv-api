@@ -3,7 +3,7 @@ mysqlDb = require('../../mysql_connection');
 async function selectCampanhas() {
     try{
         const conn      = await mysqlDb.connect();
-        const [rows]    = await conn.query('SELECT id, nome, idade_inicio, idade_final, cidade, uf, descricao FROM campanhas;');
+        const [rows]    = await conn.query('SELECT id, nome, idade_inicio, idade_final, id_tipo_vacina, cidade, uf, descricao FROM campanhas;');
         return await rows;
     }catch(error){
         console.log(error);
@@ -18,6 +18,7 @@ async function selectCampanhaById(id) {
             'campanhas.nome, ' +
             'campanhas.idade_inicio, ' +
             'campanhas.idade_final, ' +
+            'campanhas.id_tipo_vacina, ' +
             'campanhas.cidade, ' +
             'campanhas.uf, ' +
             'campanhas.descricao ' +
@@ -37,11 +38,12 @@ async function selectCampanhaById(id) {
 async function insertCampanha(campanha) {
     try{
         const conn      = await mysqlDb.connect();
-        const sql       = 'INSERT INTO campanhas(nome, idade_inicio, idade_final, cidade, uf, descricao) VALUES (?,?,?,?,?,?);';
+        const sql       = 'INSERT INTO campanhas(nome, idade_inicio, idade_final, id_tipo_vacina, cidade, uf, descricao) VALUES (?,?,?,?,?,?,?);';
         const values    = [
             campanha.nome,
             campanha.idade_inicio,
             campanha.idade_final,
+            campanha.id_tipo_vacina,
             campanha.cidade,
             campanha.uf,
             campanha.descricao
@@ -59,6 +61,7 @@ async function updateCampanha(id, campanha) {
             'SET nome=?, ' +
             'idade_inicio=?, ' +
             'idade_final=?, ' +
+            'id_tipo_vacina=?, ' +
             'cidade=?, ' +
             'uf=?, ' +
             'descricao=? ' +
@@ -68,6 +71,7 @@ async function updateCampanha(id, campanha) {
             campanha.nome,
             campanha.idade_inicio,
             campanha.idade_final,
+            campanha.id_tipo_vacina,
             campanha.cidade,
             campanha.uf,
             campanha.descricao,

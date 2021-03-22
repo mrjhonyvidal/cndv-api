@@ -63,6 +63,7 @@ const typeDefs = gql`
         nome: String
         idade_inicio: Int
         idade_final: Int
+        id_tipo_vacina: Int
         cidade: String
         uf: String
         descricao: String            
