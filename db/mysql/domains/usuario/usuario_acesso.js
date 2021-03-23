@@ -92,7 +92,7 @@ async function insertUsuarioAcesso(usuarioAcesso) {
             '',
             usuarioAcesso.senha,
             usuarioAcesso.nome,
-            new Date(1990,6,6),
+            usuarioAcesso.dt_nascimento,
             usuarioAcesso.email,
             '',
             '',

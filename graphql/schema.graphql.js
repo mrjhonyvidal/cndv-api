@@ -129,6 +129,7 @@ const typeDefs = gql`
         nome: String!
         senha: String!
         email: String!
+        dt_nascimento: String
     }
     
     input AutenticarInput {
