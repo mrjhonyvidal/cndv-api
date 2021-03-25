@@ -158,6 +158,13 @@ const resolvers = {
             } catch (error) {
                 console.log(error);
             }
+        },
+        obtenerCidadesFilteredByUF: async(_, {uf}) => {
+            try {
+                return await CidadeModel.selectCidadesByUF(uf);
+            } catch (error) {
+                console.log(error);
+            }
         }
     },
     Mutation: {

@@ -307,6 +307,46 @@ mutation atualizarDadosPessoais($cpf: String!, $input: DadosPessoaisInput) {
     "cep": "0022"
   }
 }
+
+
+query obtenerCidades{
+        obtenerCidades{
+          cidade
+          uf
+        }
+}
+
+Result:
+{
+  "data": {
+    "obtenerCidades": [
+      {
+        "cidade": "ACRELÂNDIA",
+        "uf": "AC"
+      },
+      {
+        "cidade": "ASSIS BRASIL",
+        "uf": "AC"
+      },
+      {
+        "cidade": "BRASILÉIA",
+        "uf": "AC"
+      },
+      {
+        "cidade": "BUJARI",
+        "uf": "AC"
+       ....
+       
+query obtenerCidadesFilteredByUF($uf: String!){
+        obtenerCidadesFilteredByUF(uf: $uf){
+          cidade
+          uf
+        }
+}
+
+{
+  "uf": "RJ"
+}        
 ```
 
 ### Resources

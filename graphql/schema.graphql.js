@@ -165,6 +165,7 @@ const typeDefs = gql`
         
         # Location
         obtenerCidades: [Cidade]
+        obtenerCidadesFilteredByUF(uf: String!): [Cidade]
     }
          
     type Mutation {

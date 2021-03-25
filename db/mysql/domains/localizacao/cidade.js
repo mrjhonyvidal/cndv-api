@@ -10,4 +10,19 @@ async function selectCidades() {
     }
 }
 
-module.exports = { selectCidades };
+async function selectCidadesByUF(uf) {
+    try{
+        const conn      = await mysqlDb.connect();
+        const sql       = 'SELECT cidade, uf FROM cidade WHERE uf=? and pais="BRA"';
+
+        const values = [
+            uf
+        ];
+        const [rows] = await conn.query(sql, values);
+        return await rows;
+    }catch(error){
+        console.log(error);
+    }
+}
+
+module.exports = { selectCidades, selectCidadesByUF };
