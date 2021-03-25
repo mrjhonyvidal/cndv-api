@@ -102,7 +102,7 @@ async function insertDadosPessoaisCidadao(dadosPessoaisCidadao) {
             dadosPessoaisCidadao.bairro,
             dadosPessoaisCidadao.cidade,
             dadosPessoaisCidadao.uf,
-            dadosPessoaisCidadao.pais,
+            'BRA',
             dadosPessoaisCidadao.cep,
             dadosPessoaisCidadao.obs
         ];
@@ -146,7 +146,7 @@ async function updateDadosPessoaisCidadao(cpf, dadosPessoaisCidadao) {
             dadosPessoaisCidadao.bairro,
             dadosPessoaisCidadao.cidade,
             dadosPessoaisCidadao.uf,
-            dadosPessoaisCidadao.pais,
+            'BRA',
             dadosPessoaisCidadao.cep,
             cpf
         ];
