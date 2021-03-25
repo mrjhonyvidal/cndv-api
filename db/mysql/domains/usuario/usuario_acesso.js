@@ -101,8 +101,8 @@ async function insertUsuarioAcesso(usuarioAcesso) {
             '',
             '',
             '',
-            '',
-            '',
+            usuarioAcesso.cidade,
+            usuarioAcesso.uf,
             '',
             '',
             '',
@@ -119,13 +119,19 @@ async function updateUsuarioAcesso(cpf, usuarioAcesso) {
         const conn = await mysqlDb.connect();
         const sql = 'UPDATE carteira_vacina ' +
             'SET nome=?, ' +
+            'SET dt_nascimento=?, ' +
             'senha=?, ' +
             'email=?' +
+            'cidade=?,' +
+            'uf=?'
             ' WHERE cpf=?';
         const values = [
             usuarioAcesso.nome,
+            usuarioAcesso.dt_nascimento,
             usuarioAcesso.senha,
             usuarioAcesso.email,
+            usuarioAcesso.cidade,
+            usuarioAcesso.uf,
             cpf
         ];
         return await conn.query(sql, values);

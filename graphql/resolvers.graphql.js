@@ -172,7 +172,7 @@ const resolvers = {
             // TODO apply SPR in this function, too many responsabilities!
 
             // Verify is user is registered
-            const {cpf, email, senha, dt_nascimento} = input;
+            const {cpf, email, senha, dt_nascimento, cidade, uf} = input;
             const isNewUsuario = await UsuarioAcessoModel.checkUsuarioExiste(cpf, email);
             if (isNewUsuario.length > 0) {
                 throw new Error('Já existe um usuário cadastrado com esse cpf ou email.')
