@@ -103,7 +103,7 @@ async function insertUsuarioAcesso(usuarioAcesso) {
             '',
             usuarioAcesso.cidade,
             usuarioAcesso.uf,
-            '',
+            'BRA',
             '',
             '',
             '07346574000165'
