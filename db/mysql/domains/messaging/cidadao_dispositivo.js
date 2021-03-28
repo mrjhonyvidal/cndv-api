@@ -4,10 +4,10 @@ async function selectCidadaoDispositivo(cpf, token) {
     try{
         const conn      = await mysqlDb.connect();
         const sql       = 'SELECT ' +
-            'cpf, ' +
+            'cidadao_cpf, ' +
             'dispositivo_token, ' +
             'tipo ' +
-            'FROM cidadao_dispositivos WHERE cpf=? AND token=?';
+            'FROM cidadao_dispositivos WHERE cidadao_cpf=? AND dispositivo_token=?';
 
         const values = [
             cpf,
@@ -21,11 +21,11 @@ async function selectCidadaoDispositivo(cpf, token) {
     }
 }
 
-async function selectCidadaoDispositivos() {
+async function selectTodosDispositivos() {
     try{
         const conn      = await mysqlDb.connect();
         const sql       = 'SELECT ' +
-            'cpf, ' +
+            'cidadao_cpf, ' +
             'dispositivo_token, ' +
             'tipo ' +
             'FROM cidadao_dispositivos';
@@ -38,11 +38,38 @@ async function selectCidadaoDispositivos() {
     }
 }
 
+/**
+ * Get all Android mobile devices that match the Cidadao Age range and Location(UF, Municipio) of Campaign
+ * @returns {Promise<*>}
+ */
+async function selectAndroidDispositivosMatchAgeAndLocation(campanha_idade_inicial, campanha_idade_final, campanha_uf, campanha_municipio) {
+    try{
+        const conn      = await mysqlDb.connect();
+        const sql       = 'SELECT ' +
+            'cidadao_dispositivos.dispositivo_token ' +
+            'FROM cidadao_dispositivos LEFT JOIN carteira_vacina ' +
+            'ON cidadao_dispositivos.cidadao_cpf = carteira_vacina.cpf ' +
+            'WHERE carteira_vacina.uf = ? AND carteira_vacina.cidade = ? AND TIMESTAMPDIFF(YEAR, carteira_vacina.dt_nascimento, CURDATE()) BETWEEN ? AND ?';
+
+        const values = [
+          campanha_uf,
+          campanha_municipio,
+          campanha_idade_inicial,
+          campanha_idade_final
+        ];
+
+        const [rows] = await conn.query(sql, values);
+        return await rows;
+    }catch(error){
+        console.log(error);
+    }
+}
+
 async function insertCidadaoDispositivo(cidadaoDispositivo) {
     try{
         const conn      = await mysqlDb.connect();
         const sql       = 'INSERT INTO cidadao_dispositivos(' +
-            'cpf, ' +
+            'cidadao_cpf, ' +
             'dispositivo_token, ' +
             'tipo' +
             ') VALUES (?,?,?);';
@@ -60,9 +87,9 @@ async function insertCidadaoDispositivo(cidadaoDispositivo) {
 async function updateCidadaoDispositivo(cpf, token) {
     try {
         const conn = await mysqlDb.connect();
-        const sql = 'UPDATE carteira_vacina ' +
+        const sql = 'UPDATE cidadao_dispositivos ' +
             'SET dispositivo_token=?' +
-            ' WHERE cpf=?';
+            ' WHERE cidadao_cpf=?';
         const values = [
             token,
             cpf
@@ -76,7 +103,7 @@ async function updateCidadaoDispositivo(cpf, token) {
 async function deleteCidadaoDispositivo(cpf, token) {
     try {
         const conn = await mysqlDb.connect();
-        const sql = 'DELETE FROM cidadao_dispositivos WHERE cpf=? AND dispositivo_token=?';
+        const sql = 'DELETE FROM cidadao_dispositivos WHERE cidadao_cpf=? AND dispositivo_token=?';
         return await conn.query(sql, [cpf, token]);
     }catch(error){
         console.log(error);
@@ -85,7 +112,8 @@ async function deleteCidadaoDispositivo(cpf, token) {
 
 module.exports = {
     selectCidadaoDispositivo,
-    selectCidadaoDispositivos,
+    selectTodosDispositivos,
+    selectAndroidDispositivosMatchAgeAndLocation,
     insertCidadaoDispositivo,
     updateCidadaoDispositivo,
     deleteCidadaoDispositivo

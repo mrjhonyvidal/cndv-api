@@ -347,6 +347,54 @@ query obtenerCidadesFilteredByUF($uf: String!){
 {
   "uf": "RJ"
 }        
+
+
+query obtenerDispositosCidadaoParaCampanha($input: DispositivoCidadaoSearchInput) {
+      obtenerDispositosCidadaoParaCampanha(input: $input){    
+        idade_inicio
+        idade_final
+        uf
+        municipio
+      }
+    }
+    
+{
+  "input": {
+  	"idade_inicio": "",
+  	"idade_final": "",
+  	"uf": "",
+  	"municipio": ""
+	}
+}
+
+
+mutation novoCidadaoDispositivo($input: CidadaoDispositivoInput) {
+    novoCidadaoDispositivo(input: $input)
+  }
+
+{  
+  "input": {
+    "cpf": "111.111.111-11",
+    "token": "TOKEN_HERE",
+    "tipo": "CELULAR_ANDROID"
+  }
+}
+
+query obtenerDispositosCidadaoParaCampanha($input: DispositivoCidadaoSearchInput) {
+      obtenerDispositosCidadaoParaCampanha(input: $input){    
+       	dispositivo_token        
+      }
+    }
+
+    
+{
+  "input": {
+  	"idade_inicio": 30,
+  	"idade_final": 40,
+  	"uf": "SP",
+  	"municipio": "BARUERI"
+	}
+}    
 ```
 
 ### Resources

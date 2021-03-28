@@ -84,6 +84,7 @@ const HistoricoVacinaModel = require('../db/mysql/domains/carteira_medica_cidada
 const CampanhaModel = require('../db/mysql/domains/campanha/campanhas');
 const DadosPessoaisModel = require('../db/mysql/domains/carteira_medica_cidadao/dados_pessoais_cidadao');
 const CidadeModel = require('../db/mysql/domains/localizacao/cidade');
+const CidadaoDispositivo = require('../db/mysql/domains/messaging/cidadao_dispositivo');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -136,14 +137,6 @@ const resolvers = {
                 console.log(error);
             }
         },
-        /*obtenerMensagensNotificacoes: async(_, {cpf}) => {
-            try{
-                const historicoVacinacao = await MensagensNotificacoesModel.selectMensagensNotificacoes(cpf);
-                return historicoVacinacao;
-            }catch(error){
-                console.log(error);
-            }
-        },*/
         obtenerDadosPessoais: async(_, {cpf}) => {
             try{
                 const dadosPessoais = await DadosPessoaisModel.selectDadosPessoaisCidadao(cpf);
@@ -162,6 +155,14 @@ const resolvers = {
         obtenerCidadesFilteredByUF: async(_, {uf}) => {
             try {
                 return await CidadeModel.selectCidadesByUF(uf);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        obtenerDispositosCidadaoParaCampanha: async(_, {input}) => {
+            try{
+                const {idade_inicio, idade_final, uf, municipio} = input;
+                return await CidadaoDispositivo.selectAndroidDispositivosMatchAgeAndLocation(idade_inicio, idade_final, uf, municipio);
             } catch (error) {
                 console.log(error);
             }
@@ -189,6 +190,18 @@ const resolvers = {
             } catch (error) {
                 throw new Error(error);
             }
+        },
+        novoCidadaoDispositivo: async(_, {input}) => {
+
+          const {cpf, token, tipo} = input;
+
+            const isNewDispositivo = await CidadaoDispositivo.selectCidadaoDispositivo(cpf, token);
+            if (isNewDispositivo.length > 0) {
+                return 'O dispositivo já está cadastrado.';
+            }
+
+          const isNewDevice = await CidadaoDispositivo.insertCidadaoDispositivo(input);
+          return "Dispositivo cadastrado com sucesso!";
         },
         autenticarUsuario: async (_, {input}) => {
             const {cpf, senha} = input;

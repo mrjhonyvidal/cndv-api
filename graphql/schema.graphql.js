@@ -79,6 +79,10 @@ const typeDefs = gql`
         descricao: String
     }
     
+    type CidadaoDispositivo {
+        dispositivo_token: String!
+    }
+    
     input DadosPessoaisInput {
         rg: String
         senha: String
@@ -134,6 +138,12 @@ const typeDefs = gql`
         cidade: String
     }
     
+    input CidadaoDispositivoInput {
+        cpf: String!
+        token: String!
+        tipo: String!  
+    }
+    
     input AutenticarInput {
         cpf: String!
         senha: String!
@@ -142,6 +152,13 @@ const typeDefs = gql`
     input TipoVacinaInput {
         id: Int
         descricao: String!
+    }
+    
+    input DispositivoCidadaoSearchInput {
+        idade_inicio: Int
+        idade_final: Int
+        uf: String
+        municipio: String
     }
     
     type Query {
@@ -159,6 +176,9 @@ const typeDefs = gql`
         
         # Dados Pessoais Cidadao
         obtenerDadosPessoais(cpf: String!): DadosPessoais
+        
+        # Dispositivo 
+        obtenerDispositosCidadaoParaCampanha(input: DispositivoCidadaoSearchInput): [CidadaoDispositivo]
                
         # Campanhas
         obtenerCampanhas: [Campanha]
@@ -174,6 +194,9 @@ const typeDefs = gql`
         # Usuario Acesso
         novoUsuarioAcesso(input: UsuarioInput): UsuarioAcesso
         autenticarUsuario(input: AutenticarInput): UsuarioToken
+            
+        # Cidadão Dispositivos
+        novoCidadaoDispositivo(input: CidadaoDispositivoInput): String
         
         # Historico Vacinacao
         novoHistoricoVacinacao(input: HistoricoVacinacaoInput): HistoricoVacinacao
