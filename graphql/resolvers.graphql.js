@@ -85,6 +85,7 @@ const CampanhaModel = require('../db/mysql/domains/campanha/campanhas');
 const DadosPessoaisModel = require('../db/mysql/domains/carteira_medica_cidadao/dados_pessoais_cidadao');
 const CidadeModel = require('../db/mysql/domains/localizacao/cidade');
 const CidadaoDispositivo = require('../db/mysql/domains/messaging/cidadao_dispositivo');
+const firebaseSDK = require('../services/firebase/oauth2_access_token');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -200,7 +201,7 @@ const resolvers = {
                 return 'O dispositivo já está cadastrado.';
             }
 
-          const isNewDevice = await CidadaoDispositivo.insertCidadaoDispositivo(input);
+          await CidadaoDispositivo.insertCidadaoDispositivo(input);
           return "Dispositivo cadastrado com sucesso!";
         },
         autenticarUsuario: async (_, {input}) => {
@@ -242,7 +243,29 @@ const resolvers = {
         },
         novaCampanha: async (_, {input}) => {
           try {
+              // Destruct Campanhas
+              const {nome, idade_inicio, idade_final, cidade, uf} = input;
               const result = await CampanhaModel.insertCampanha(input);
+
+              // Get all citizen devices that match campanha
+              // TODO check here we're considering that all the campaings will have age limit
+              // make it more flexible and add more parameters
+              let devices = await CidadaoDispositivo.selectAndroidDispositivosMatchAgeAndLocation(
+                  idade_inicio,
+                  idade_final,
+                  uf,
+                  cidade
+              );
+
+              let message = `${nome}. Idade entre ${idade_inicio} a ${idade_final} em ${cidade} ,${uf}.Veja onde você pode vacinar.`;
+              devices.map((device) => {
+                  firebaseSDK.sendFcmMessage(firebaseSDK.buildToUniqueDeviceTokenMessage(
+                      nome.toString(),
+                      message.toString(),
+                      device.dispositivo_token
+                  ))
+              });
+
               return result[0].rowsAffected;
           } catch (error) {
               console.log(error);

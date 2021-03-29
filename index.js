@@ -4,7 +4,6 @@ const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./graphql/schema.graphql');
 const resolvers = require('./graphql/resolvers.graphql');
 const jwt = require('jsonwebtoken');
-const firebaseSDK = require('./services/firebase/oauth2_access_token');
 
 const server = new ApolloServer({
     typeDefs,
@@ -27,14 +26,10 @@ const server = new ApolloServer({
 });
 
 // Temporary - check Firebase Cloud Messaging via REST HTTP v1 using OAuth2
+// Get Firebase Token
 /*const firebaseOAuth2Token = firebaseSDK.getAccessToken().then(function(result){
     console.log(result)
 });*/
-/*firebaseSDK.sendFcmMessage(firebaseSDK.buildToUniqueDeviceTokenMessage(
-    "Campanha Vacinação Covid-19 Barueri",
-    "Campanha Vacinação COVID-19 para pessoas de 70 a 80 anos em Barueri, veja onde você pode vacinar.",
-    "HereGoesTheDeviceToken"
-));*/
 
 const PORT = process.env.PORT || 4000;
 
