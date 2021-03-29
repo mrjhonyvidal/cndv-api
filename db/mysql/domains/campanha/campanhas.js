@@ -3,7 +3,7 @@ mysqlDb = require('../../mysql_connection');
 async function selectCampanhas() {
     try{
         const conn      = await mysqlDb.connect();
-        const [rows]    = await conn.query('SELECT id, nome, idade_inicio, idade_final, id_tipo_vacina, cidade, uf, descricao FROM campanhas;');
+        const [rows]    = await conn.query('SELECT id, nome, idade_inicio, idade_final, id_tipo_vacina, cidade, uf, descricao FROM campanhas ORDER BY dt_atualizacao DESC;');
         return await rows;
     }catch(error){
         console.log(error);
@@ -29,6 +29,61 @@ async function selectCampanhaById(id) {
             id
         ];
         const [rows] = await conn.query(sql, values);
+        return await rows;
+    }catch(error){
+        console.log(error);
+    }
+}
+
+async function searchCampanhas(input) {
+    try{
+        const valuesForSQLParameters = [];
+        const conn      = await mysqlDb.connect();
+        const sql       = 'SELECT ' +
+            'campanhas.id, ' +
+            'campanhas.nome, ' +
+            'campanhas.idade_inicio, ' +
+            'campanhas.idade_final, ' +
+            'campanhas.id_tipo_vacina, ' +
+            'campanhas.cidade, ' +
+            'campanhas.uf, ' +
+            'campanhas.descricao ' +
+            'FROM campanhas WHERE 1=1 ';
+
+        if(input.tipo != undefined && input.tipo) {
+            const whereTipo = 'AND tipo=? ';
+            sql.concat(whereTipo);
+            valuesForSQLParameters.push(input.tipo);
+        }
+
+        if(input.idade_inicio != undefined && input.idade_inicio) {
+            const whereIdadeInicio = 'AND idade_inicio=? ';
+            sql.concat(whereIdadeInicio);
+            valuesForSQLParameters.push(input.idade_inicio);
+        }
+
+        if(input.idade_final != undefined && input.idade_final) {
+            const whereIdadeFinal = 'AND idade_final=? ';
+            sql.concat(whereIdadeFinal);
+            valuesForSQLParameters.push(input.idade_final);
+        }
+
+        if(input.cidade != undefined && input.cidade) {
+            const whereCidade = 'AND cidade=? ';
+            sql.concat(whereCidade);
+            valuesForSQLParameters.push(input.cidade);
+        }
+
+        if(input.uf != undefined && input.uf) {
+            const whereUF = 'AND uf=? ';
+            sql.concat(whereUF);
+            valuesForSQLParameters.push(input.uf);
+        }
+
+        const orderBy = 'ORDER BY dt_atualizacao DESC';
+        sql.concat(orderBy);
+
+        const [rows] = await conn.query(sql, valuesForSQLParameters);
         return await rows;
     }catch(error){
         console.log(error);
@@ -93,4 +148,10 @@ async function deleteCampanha(id) {
     }
 }
 
-module.exports = { selectCampanhas, selectCampanhaById, insertCampanha, updateCampanha, deleteCampanha };
+module.exports = {
+    selectCampanhas,
+    selectCampanhaById,
+    searchCampanhas,
+    insertCampanha,
+    updateCampanha,
+    deleteCampanha };

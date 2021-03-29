@@ -122,6 +122,14 @@ const resolvers = {
                 console.log(error);
             }
         },
+        searchCampanhas: async(_, {input}) => {
+            try{
+                const campanhas = await CampanhaModel.searchCampanhas(input);
+                return campanhas;
+            }catch(error){
+                console.log(error);
+            }
+        },
         obtenerCampanha: async(_, {id}) => {
             try{
                 const campanha = await CampanhaModel.selectCampanhaById(id);

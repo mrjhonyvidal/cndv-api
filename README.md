@@ -231,6 +231,7 @@ mutation novaCampanha($input: CampanhaInput) {
     "nome": "Campanha COVID-19 DOSE 1",
     "idade_inicio": 80,
     "idade_final": 90,
+    "id_tipo_vacina": 2
     "cidade": "BARUERI",
     "uf": "SP"
   }
@@ -421,7 +422,29 @@ query obtenerDispositosCidadaoParaCampanha($input: DispositivoCidadaoSearchInput
   	"uf": "SP",
   	"municipio": "BARUERI"
 	}
-}    
+}
+
+query searchCampanhas($input: CampanhasSearchInput) {
+      searchCampanhas(input: $input){    
+       	id
+        nome
+        idade_inicio
+        idade_final
+        cidade
+        uf
+      }
+    }
+
+    
+{
+  "input": {
+    "tipo": "BCG ID",
+  	"idade_inicio": 30,
+  	"idade_final": 40,
+  	"uf": "SP",
+  	"cidade": "BARUERI"
+	}
+}     
 ```
 
 ### Resources

@@ -119,10 +119,19 @@ const typeDefs = gql`
         nome: String
         idade_inicio: Int
         idade_final: Int
+        id_tipo_vacina: Int
         cidade: String
         uf: String
         descricao: String
     }            
+    
+    input CampanhasSearchInput{
+       tipo: Int
+       idade_inicio: Int
+       idade_final: Int
+       cidade: String
+       uf : String
+    }
        
     input CarteiraTipoVacinasInput {
         descricao: String
@@ -184,6 +193,7 @@ const typeDefs = gql`
         obtenerCampanhas: [Campanha]
         obtenerCampanha(id: ID): Campanha
         obtenerCampanhasPorIdade(input: CampanhaInput!): [Campanha]
+        searchCampanhas(input: CampanhasSearchInput): [Campanha]
         
         # Location
         obtenerCidades: [Cidade]
