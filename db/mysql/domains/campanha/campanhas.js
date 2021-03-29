@@ -39,7 +39,7 @@ async function searchCampanhas(input) {
     try{
         const valuesForSQLParameters = [];
         const conn      = await mysqlDb.connect();
-        const sql       = 'SELECT ' +
+        var sql       = 'SELECT ' +
             'campanhas.id, ' +
             'campanhas.nome, ' +
             'campanhas.idade_inicio, ' +
@@ -51,37 +51,37 @@ async function searchCampanhas(input) {
             'FROM campanhas WHERE 1=1 ';
 
         if(input.tipo != undefined && input.tipo) {
-            const whereTipo = 'AND tipo=? ';
-            sql.concat(whereTipo);
+            const whereTipo = 'AND id_tipo_vacina=? ';
+            sql = sql.concat(whereTipo);
             valuesForSQLParameters.push(input.tipo);
         }
 
         if(input.idade_inicio != undefined && input.idade_inicio) {
             const whereIdadeInicio = 'AND idade_inicio=? ';
-            sql.concat(whereIdadeInicio);
+            sql = sql.concat(whereIdadeInicio);
             valuesForSQLParameters.push(input.idade_inicio);
         }
 
         if(input.idade_final != undefined && input.idade_final) {
             const whereIdadeFinal = 'AND idade_final=? ';
-            sql.concat(whereIdadeFinal);
+            sql = sql.concat(whereIdadeFinal);
             valuesForSQLParameters.push(input.idade_final);
         }
 
         if(input.cidade != undefined && input.cidade) {
             const whereCidade = 'AND cidade=? ';
-            sql.concat(whereCidade);
+            sql = sql.concat(whereCidade);
             valuesForSQLParameters.push(input.cidade);
         }
 
         if(input.uf != undefined && input.uf) {
             const whereUF = 'AND uf=? ';
-            sql.concat(whereUF);
+            sql = sql.concat(whereUF);
             valuesForSQLParameters.push(input.uf);
         }
 
         const orderBy = 'ORDER BY dt_atualizacao DESC';
-        sql.concat(orderBy);
+        sql = sql.concat(orderBy);
 
         const [rows] = await conn.query(sql, valuesForSQLParameters);
         return await rows;
@@ -154,4 +154,5 @@ module.exports = {
     searchCampanhas,
     insertCampanha,
     updateCampanha,
-    deleteCampanha };
+    deleteCampanha
+};
