@@ -1,3 +1,4 @@
+require('dotenv').config({path:'../../env/qa.env'});
 const https = require('https');
 const { google } = require('googleapis');
 
@@ -8,15 +9,16 @@ const MESSAGING_SCOPE = 'https://www.googleapis.com/auth/firebase.messaging';
 const SCOPES = [MESSAGING_SCOPE];
 
 /**
- * Get a valid access token.
+ * Get a valid access token.       //const key  = require('./service-account.json');
  */
 function getAccessToken() {
+    const firebase_email = process.env.FIREBASE_CLIENT_EMAIL;
+    const firebase_private_key = process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/gm, '\n');
     return new Promise(function(resolve, reject) {
-       const key  = require('./service-account.json');
        const jwtClient = new google.auth.JWT(
-           key.client_email,
+           firebase_email,
            null,
-           key.private_key,
+           firebase_private_key,
            SCOPES,
            null
        );

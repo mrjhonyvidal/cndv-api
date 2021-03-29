@@ -15,6 +15,33 @@ Configure suas variáveis em env/dev.env
 sudo docker-compose up
 ```
 
+### Google Firebase SDK
+Para usar Firebase Cloud Messaging é preciso baixar o arquivo service-account.json no próprio painel do Firebase, e para o uso no Heroku as variáveis foram mapeadas no qa.env(env/qa.env ou /env/dev.env) abaixo segue as variáveis sem dados:
+```
+Dentro de env/qa.env
+
+MYSQL_HOST=
+MYSQL_PORT=
+MYSQL_DATABASE=
+MYSQL_USER=
+MYSQL_PASSWORD=
+MYSQL_ROOT_PASSWORD=
+SECRET_JWT=
+FIREBASE_TYPE=
+FIREBASE_PROJECT_ID=
+FIREBASE_PRIVATE_KEY_ID=
+FIREBASE_PRIVATE_KEY=
+FIREBASE_CLIENT_EMAIL=
+FIREBASE_CLIENT_ID=
+FIREBASE_AUTH_URI=
+FIREBASE_TOKEN_URI=
+FIREBASE_AUTH_PROVIDER_X509_CERT_URL=
+FIREBASE_CLIENT_X509_CERT_URL=
+
+
+
+```
+
 ### Levantar servidor local
 ```
 yarn run dev
