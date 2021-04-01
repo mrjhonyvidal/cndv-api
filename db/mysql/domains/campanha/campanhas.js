@@ -57,13 +57,13 @@ async function searchCampanhas(input) {
         }
 
         if(input.idade_inicio != undefined && input.idade_inicio) {
-            const whereIdadeInicio = 'AND idade_inicio=? ';
+            const whereIdadeInicio = 'AND idade_inicio>=? ';
             sql = sql.concat(whereIdadeInicio);
             valuesForSQLParameters.push(input.idade_inicio);
         }
 
         if(input.idade_final != undefined && input.idade_final) {
-            const whereIdadeFinal = 'AND idade_final=? ';
+            const whereIdadeFinal = 'AND idade_final<=? ';
             sql = sql.concat(whereIdadeFinal);
             valuesForSQLParameters.push(input.idade_final);
         }
