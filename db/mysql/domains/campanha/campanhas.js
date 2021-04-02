@@ -57,9 +57,10 @@ async function searchCampanhas(input) {
         }
 
         if(input.idade_inicio != undefined && input.idade_inicio) {
-            const whereIdadeInicio = 'AND idade_inicio>=? ';
+            const whereIdadeInicio = 'AND idade_inicio BETWEEN ? AND ? ';
             sql = sql.concat(whereIdadeInicio);
-            valuesForSQLParameters.push(input.idade_inicio);
+            // We considerer that campanhas are always within a 10 years range
+            valuesForSQLParameters.push(input.idade_inicio, input.idade_inicio + 10);
         }
 
         if(input.idade_final != undefined && input.idade_final) {
